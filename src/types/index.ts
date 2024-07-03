@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 type requestObj = {
   birth_year: string;
   created: Date;
@@ -21,4 +23,18 @@ interface IRequest {
   results: requestObj[];
 }
 
-export { type IRequest, type requestObj };
+type ErrorBoundaryProps = {
+  fallback: ReactNode;
+  children: ReactNode;
+};
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
+
+export {
+  type IRequest,
+  type requestObj,
+  type ErrorBoundaryProps,
+  type ErrorBoundaryState,
+};

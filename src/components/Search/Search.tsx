@@ -25,28 +25,34 @@ export class Search extends React.Component<IProps, IState> {
   }
 
   inputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({
-      ...this.state,
-      input: e.target.value,
-    });
+    this.setState(
+      (state: IState): IState => ({
+        ...state,
+        input: e.target.value.trim(),
+      }),
+    );
   }
 
   searchHandler() {
     localStorage.setItem('searchString', this.state.input);
-    this.setState({
-      ...this.state,
-      isLoading: true,
-    });
+    this.setState(
+      (state: IState): IState => ({
+        ...state,
+        isLoading: true,
+      }),
+    );
     request<IRequest>(
       `https://swapi.dev/api/people/?search=${this.state.input}`,
     )
       .then((data) => {
         if (typeof data !== 'string') {
-          this.setState({
-            ...this.state,
-            list: data.results,
-            isLoading: false,
-          });
+          this.setState(
+            (state: IState): IState => ({
+              ...state,
+              list: data.results,
+              isLoading: false,
+            }),
+          );
         }
       })
       .catch((err) => console.error(err));

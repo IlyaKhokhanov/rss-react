@@ -3,11 +3,17 @@ import { Search } from './components/Search/Search';
 
 function App() {
   return (
-    <>
-      <div>
-        <Search />
-      </div>
-    </>
+    <div>
+      <button
+        className="error-btn"
+        onClick={() => {
+          throw new Error('Something went wrong');
+        }}
+      >
+        Generate ERROR
+      </button>
+      <Search />
+    </div>
   );
 }
 

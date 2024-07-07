@@ -21,6 +21,9 @@ export class Search extends React.Component<IProps, IState> {
     };
     this.inputChange = this.inputChange.bind(this);
     this.searchHandler = this.searchHandler.bind(this);
+  }
+
+  componentDidMount(): void {
     this.searchHandler();
   }
 

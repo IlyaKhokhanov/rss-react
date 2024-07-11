@@ -1,4 +1,4 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 import { requestObj } from '../../types';
 import './Card.scss';
 
@@ -9,11 +9,21 @@ type CardProps = {
 };
 
 function Card({ card, currentElement, setCurrentElement }: CardProps) {
+  const isActive =
+    currentElement === card.url.split('/')[card.url.split('/').length - 2];
+
   return (
-    <li
-      className={currentElement === card.url ? 'list-item-active' : 'list-item'}
+    <Link
+      className={isActive ? 'list-item-active' : 'list-item'}
+      to={
+        isActive
+          ? ''
+          : `details/${card.url.split('/')[card.url.split('/').length - 2]}`
+      }
       onClick={() => {
-        setCurrentElement(currentElement === card.url ? '' : card.url);
+        setCurrentElement(
+          isActive ? '' : card.url.split('/')[card.url.split('/').length - 2],
+        );
       }}
     >
       <h3 className="list-item-header">{card.name}</h3>
@@ -33,7 +43,7 @@ function Card({ card, currentElement, setCurrentElement }: CardProps) {
         <span className="list-item-desc">Color hair: </span>
         <span>{card.hair_color}</span>
       </div>
-    </li>
+    </Link>
   );
 }
 

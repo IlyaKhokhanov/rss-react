@@ -27,6 +27,7 @@ interface IState {
   countElements: number;
   itemsPerPage: number;
   currentElement: string;
+  hasError: boolean;
 }
 
 interface IRequestList {

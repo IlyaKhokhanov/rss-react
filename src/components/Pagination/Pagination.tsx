@@ -1,4 +1,4 @@
-import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './Pagination.scss';
 
 type PaginationProps = {
@@ -12,10 +12,11 @@ function Pagination({
   totalCount,
   itemsPerPage,
   currentPage,
-  setCurrentPage,
 }: PaginationProps) {
-  const numbersArr = [];
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
+  const numbersArr = [];
   for (let i = 1; i <= Math.ceil(totalCount / itemsPerPage); i++) {
     numbersArr.push(i);
   }
@@ -28,7 +29,11 @@ function Pagination({
           className={
             el === currentPage ? 'pagination-item-active' : 'pagination-item'
           }
-          onClick={() => setCurrentPage(el)}
+          onClick={() => {
+            const arr = pathname.split('/');
+            arr[2] = String(el);
+            navigate(arr.join('/'));
+          }}
         >
           {el}
         </li>

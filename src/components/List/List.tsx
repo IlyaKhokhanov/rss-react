@@ -10,16 +10,22 @@ type ListProps = {
 
 function List({ data, setCurrentElement }: ListProps) {
   return (
-    <ul className="list">
-      {data.list.map((el, indx) => (
-        <Card
-          key={indx}
-          card={el}
-          currentElement={data.currentElement}
-          setCurrentElement={setCurrentElement}
-        />
-      ))}
-    </ul>
+    <>
+      {data.list.length ? (
+        <ul className="list">
+          {data.list.map((el, indx) => (
+            <Card
+              key={indx}
+              card={el}
+              currentElement={data.currentElement}
+              setCurrentElement={setCurrentElement}
+            />
+          ))}
+        </ul>
+      ) : (
+        <div className="list-empty">List is empty</div>
+      )}
+    </>
   );
 }
 

@@ -6,25 +6,40 @@ import Search from './components/Search/Search';
 import Loader from './components/Loader/Loader';
 import Pagination from './components/Pagination/Pagination';
 import './App.scss';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 function App() {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
   const [state, setState] = useState<IState>({
-    currentPage: 1,
+    currentPage: +pathname.split('/')[2],
     searchString: localStorage.getItem('searchString') || '',
     list: [],
     isLoading: true,
     countElements: 0,
     itemsPerPage: 10,
-    currentElement: '',
+    currentElement: pathname.split('/')[4] ? pathname.split('/')[4] : '',
+    hasError: false,
   });
+
+  useEffect(() => {
+    setState((prev) => ({
+      ...prev,
+      currentPage: +pathname.split('/')[2],
+      currentElement: pathname.split('/')[4] ? pathname.split('/')[4] : '',
+    }));
+  }, [pathname]);
 
   function setSearchString(string: string) {
     localStorage.setItem('searchString', string);
     setState((prev) => ({
       ...prev,
       searchString: string,
-      currentPage: 1,
     }));
+    const arr = pathname.split('/');
+    arr[2] = '1';
+    navigate(arr.join('/'));
   }
 
   function setCurrentPage(number: number) {
@@ -66,12 +81,22 @@ function App() {
     updateList();
   }, [state.searchString, state.currentPage]);
 
+  useEffect(() => {
+    function addError() {
+      if (state.hasError) throw new Error('Error');
+    }
+    addError;
+  }, [state.hasError]);
+
   return (
-    <div>
+    <div className="app">
       <button
         className="error-btn"
         onClick={() => {
-          throw new Error('Something went wrong');
+          setState((prev) => ({
+            ...prev,
+            hasError: true,
+          }));
         }}
       >
         Generate ERROR
@@ -96,6 +121,7 @@ function App() {
             </>
           )}
         </div>
+        {state.currentElement && <Outlet />}
       </div>
     </div>
   );

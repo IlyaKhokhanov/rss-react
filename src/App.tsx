@@ -7,19 +7,21 @@ import Loader from './components/Loader/Loader';
 import Pagination from './components/Pagination/Pagination';
 import './App.scss';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { useLocalStorage } from './hooks';
 
 function App() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { value } = useLocalStorage('searchString', '');
 
   const [state, setState] = useState<IState>({
     currentPage: +pathname.split('/')[2],
-    searchString: localStorage.getItem('searchString') || '',
+    searchString: value,
     list: [],
     isLoading: true,
     countElements: 0,
     itemsPerPage: 10,
-    currentElement: pathname.split('/')[4] ? pathname.split('/')[4] : '',
+    currentElement: pathname.split('/')[4] || '',
     hasError: false,
   });
 
@@ -27,12 +29,11 @@ function App() {
     setState((prev) => ({
       ...prev,
       currentPage: +pathname.split('/')[2],
-      currentElement: pathname.split('/')[4] ? pathname.split('/')[4] : '',
+      currentElement: pathname.split('/')[4] || '',
     }));
   }, [pathname]);
 
   function setSearchString(string: string) {
-    localStorage.setItem('searchString', string);
     setState((prev) => ({
       ...prev,
       searchString: string,
@@ -40,13 +41,6 @@ function App() {
     const arr = pathname.split('/');
     arr[2] = '1';
     navigate(arr.join('/'));
-  }
-
-  function setCurrentPage(number: number) {
-    setState((prev) => ({
-      ...prev,
-      currentPage: number,
-    }));
   }
 
   function setCurrentElement(url: string) {
@@ -85,7 +79,7 @@ function App() {
     function addError() {
       if (state.hasError) throw new Error('Error');
     }
-    addError;
+    addError();
   }, [state.hasError]);
 
   return (
@@ -116,7 +110,6 @@ function App() {
                 totalCount={state.countElements}
                 itemsPerPage={state.itemsPerPage}
                 currentPage={state.currentPage}
-                setCurrentPage={setCurrentPage}
               />
             </>
           )}

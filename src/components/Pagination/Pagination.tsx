@@ -5,7 +5,6 @@ type PaginationProps = {
   totalCount: number;
   itemsPerPage: number;
   currentPage: number;
-  setCurrentPage: (number: number) => void;
 };
 
 function Pagination({

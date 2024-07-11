@@ -1,28 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Search.scss';
+import { useLocalStorage } from '../../hooks';
 
 type SearchProps = {
   searchHandler: (arg: string) => void;
 };
 
 function Search({ searchHandler }: SearchProps) {
-  const [input, setInput] = useState(
-    localStorage.getItem('searchString') || '',
-  );
+  const { value, setValue } = useLocalStorage('searchString', '');
 
   function inputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setInput(e.target.value);
+    setValue(e.target.value);
   }
 
   return (
     <div className="header">
       <input
         className="header-input"
-        defaultValue={input}
+        defaultValue={value}
         type="text"
         onChange={inputChange}
       />
-      <button className="header-btn" onClick={() => searchHandler(input)}>
+      <button className="header-btn" onClick={() => searchHandler(value)}>
         Search
       </button>
     </div>

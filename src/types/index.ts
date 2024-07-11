@@ -19,8 +19,19 @@ type requestObj = {
   vehicles: string[];
 };
 
-interface IRequest {
+interface IState {
+  currentPage: number;
+  searchString: string;
+  list: requestObj[];
+  isLoading: boolean;
+  countElements: number;
+  itemsPerPage: number;
+  currentElement: string;
+}
+
+interface IRequestList {
   results: requestObj[];
+  count: number;
 }
 
 type ErrorBoundaryProps = {
@@ -33,8 +44,9 @@ interface ErrorBoundaryState {
 }
 
 export {
-  type IRequest,
   type requestObj,
+  type IRequestList,
+  type IState,
   type ErrorBoundaryProps,
   type ErrorBoundaryState,
 };

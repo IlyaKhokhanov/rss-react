@@ -4,6 +4,7 @@ import { IRequestList, IState } from './types';
 import List from './components/List/List';
 import Search from './components/Search/Search';
 import Loader from './components/Loader/Loader';
+import Pagination from './components/Pagination/Pagination';
 import './App.scss';
 
 function App() {
@@ -23,6 +24,13 @@ function App() {
       ...prev,
       searchString: string,
       currentPage: 1,
+    }));
+  }
+
+  function setCurrentPage(number: number) {
+    setState((prev) => ({
+      ...prev,
+      currentPage: number,
     }));
   }
 
@@ -79,6 +87,12 @@ function App() {
           ) : (
             <>
               <List data={state} setCurrentElement={setCurrentElement} />
+              <Pagination
+                totalCount={state.countElements}
+                itemsPerPage={state.itemsPerPage}
+                currentPage={state.currentPage}
+                setCurrentPage={setCurrentPage}
+              />
             </>
           )}
         </div>

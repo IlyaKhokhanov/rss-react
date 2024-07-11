@@ -1,0 +1,25 @@
+.list-item,
+.list-item-active {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 180px;
+  padding: 0 0 10px 0;
+  border: 1px solid #e2e2e2;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+
+  &-header {
+    padding: 10px;
+    background: #e2e2e2;
+  }
+
+  &-desc {
+    font-weight: 600;
+  }
+}
+
+.list-item-active {
+  background: #e2e2e2;
+}

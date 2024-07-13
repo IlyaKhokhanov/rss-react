@@ -1,7 +1,7 @@
 import './Loader.scss';
 
 function Loader() {
-  return <div className="loader">Loading...</div>;
+  return <h1 className="loader">Loading...</h1>;
 }
 
 export default Loader;

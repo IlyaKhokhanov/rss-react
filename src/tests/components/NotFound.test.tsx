@@ -1,10 +1,8 @@
-import { it, expect, describe } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import NotFound from '../../components/NotFound/NotFound';
-import '@testing-library/jest-dom/vitest';
 
-describe('Error', () => {
-  it('should rendering "Loading..."', () => {
+describe('NotFound', () => {
+  it('should rendering "404: Page Not Found"', () => {
     render(<NotFound />);
 
     const heading = screen.getByRole('heading');

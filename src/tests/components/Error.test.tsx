@@ -1,10 +1,8 @@
-import { it, expect, describe } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import Error from '../../components/Error/Error';
-import '@testing-library/jest-dom/vitest';
 
 describe('Error', () => {
-  it('should rendering "Loading..."', () => {
+  it('should rendering "Something went wrong"', () => {
     render(<Error />);
 
     const heading = screen.getByRole('heading');

@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const useLocalStorage = <T>(key: string, initialValue?: T) => {
   const [value, setStoredValue] = useState<T>(() => {
@@ -18,4 +19,9 @@ const useLocalStorage = <T>(key: string, initialValue?: T) => {
   return { value, setValue } as const;
 };
 
-export { useLocalStorage };
+function useLocationPathname(): string {
+  const { pathname } = useLocation();
+  return pathname;
+}
+
+export { useLocalStorage, useLocationPathname };

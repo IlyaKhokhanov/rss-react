@@ -5,9 +5,9 @@ import List from './components/List/List';
 import Search from './components/Search/Search';
 import Loader from './components/Loader/Loader';
 import Pagination from './components/Pagination/Pagination';
-import './App.scss';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useLocalStorage } from './hooks';
+import './App.scss';
 
 function App() {
   const { pathname } = useLocation();
@@ -37,6 +37,7 @@ function App() {
     setState((prev) => ({
       ...prev,
       searchString: string,
+      currentPage: 1,
     }));
     const arr = pathname.split('/');
     arr[2] = '1';

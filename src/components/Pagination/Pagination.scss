@@ -1,16 +1,18 @@
 .pagination {
+  margin-bottom: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
 
   &-item,
   &-item-active {
-    padding: 3px 8px;
-    border: 1px solid #e2e2e2;
-    background: #e2e2e2;
+    padding: 5px 10px;
+    border: none;
+    background: #e9e9e9;
     border-radius: 8px;
     cursor: pointer;
+    box-shadow: 0px 18px 15px 0px #94949426;
 
     &:hover {
       opacity: 0.7;
@@ -18,10 +20,21 @@
   }
 
   &-item-active {
-    opacity: 0.5;
+    background: #0cb4f1;
+    color: #fff;
+    cursor: default;
   }
 
   a {
     color: #000;
+  }
+}
+
+.dark-theme {
+  .pagination {
+    &-item {
+      background: #33383d;
+      color: #fff;
+    }
   }
 }

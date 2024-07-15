@@ -5,15 +5,15 @@
   gap: 5px;
   width: 180px;
   padding: 0 0 10px 0;
-  border: 1px solid #e2e2e2;
   color: #000;
-  border-radius: 20px;
+  border-radius: 7px;
   overflow: hidden;
   cursor: pointer;
+  box-shadow: 0px 18px 15px 0px #94949426;
 
   &-header {
     padding: 10px;
-    background: #e2e2e2;
+    background: #e9e9e9;
   }
 
   &-desc {
@@ -22,5 +22,21 @@
 }
 
 .list-item-active {
-  background: #e2e2e2;
+  background: #e9e9e9;
+}
+
+.dark-theme {
+  .list-item {
+    background: #33383d;
+    color: #fff;
+
+    &-header {
+      background: #1f1f1f;
+    }
+
+    &-active {
+      background: #1f1f1f;
+      color: #fff;
+    }
+  }
 }

@@ -15,12 +15,19 @@ import {
   setCurrentElement,
   setCurrentPage,
   setError,
+  setDarkTheme,
 } from '../../redux/slices/application';
 
 function MainPage() {
   const dispatch = useAppDispatch();
-  const { currentPage, searchString, currentElement, hasError, isLoading } =
-    useAppSelector((state) => state.application);
+  const {
+    currentPage,
+    searchString,
+    currentElement,
+    hasError,
+    isLoading,
+    isDarkTheme,
+  } = useAppSelector((state) => state.application);
 
   const params = useParams();
   const navigate = useNavigate();
@@ -66,10 +73,18 @@ function MainPage() {
   }, [currentPage, currentElement]);
 
   return (
-    <div className="app">
-      <button className="error-btn" onClick={() => dispatch(setError(true))}>
-        Generate ERROR
-      </button>
+    <div className={`app ${isDarkTheme ? 'dark-theme' : ''}`}>
+      <div className="buttons-wrapper">
+        <button className="error-btn" onClick={() => dispatch(setError(true))}>
+          Generate ERROR
+        </button>
+        <button
+          className="theme-button"
+          onClick={() => dispatch(setDarkTheme(!isDarkTheme))}
+        >
+          {isDarkTheme ? 'Turn on a light theme' : 'Turn on the dark theme'}
+        </button>
+      </div>
       <Search />
       <div className="main">
         <div

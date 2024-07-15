@@ -24,21 +24,6 @@
     gap: 15px;
   }
 
-  &-download {
-    margin-bottom: 20px;
-    padding: 6px 36px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    background: #0cb4f1;
-    color: #fff;
-    font-size: 18px;
-
-    &:hover {
-      opacity: 0.7;
-    }
-  }
-
   &-delete {
     margin-bottom: 20px;
     padding: 6px 36px;
@@ -52,6 +37,21 @@
     &:hover {
       opacity: 0.7;
     }
+  }
+}
+
+.download {
+  margin-bottom: 20px;
+  padding: 6px 36px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  background: #0cb4f1;
+  color: #fff;
+  font-size: 18px;
+
+  &:hover {
+    opacity: 0.7;
   }
 }
 

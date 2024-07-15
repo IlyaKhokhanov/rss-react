@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { deleteAllItems } from '../../redux/slices/selectedItems';
+import ExportCSV from '../ExportCSV/ExportCSV';
 import './FlyoutElement.scss';
 
 function FlyoutElement() {
@@ -19,9 +20,7 @@ function FlyoutElement() {
               Unselect all
             </button>
 
-            <button className="flyout-download" onClick={() => {}}>
-              Download
-            </button>
+            <ExportCSV data={list} fileName={`${list.length}_heroes.csv`} />
           </div>
         </div>
       )}

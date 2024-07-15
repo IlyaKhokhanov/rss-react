@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">34.66% </span>
+                <span class="strong">42.1% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>26/75</span>
+                <span class='fraction'>32/76</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/4</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">34.66% </span>
+                <span class="strong">42.1% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>26/75</span>
+                <span class='fraction'>32/76</span>
             </div>
         
             
@@ -148,7 +148,9 @@
 <a name='L83'></a><a href='#L83'>83</a>
 <a name='L84'></a><a href='#L84'>84</a>
 <a name='L85'></a><a href='#L85'>85</a>
-<a name='L86'></a><a href='#L86'>86</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -157,33 +159,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -230,7 +230,11 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useEffect, useState } from 'react';
@@ -253,9 +257,9 @@ function OpenCard() {
       setOpenCard(null);
       request&lt;requestObj&gt;(URL + pathname.split('/')[4])
         .then((data) =&gt; {
-<span class="cstat-no" title="statement not covered" >          if (typeof data !== 'string') {</span>
-<span class="cstat-no" title="statement not covered" >            setOpenCard(data);</span>
-<span class="cstat-no" title="statement not covered" >          }</span>
+          if (typeof data !== 'string') {
+            setOpenCard(data);
+          }
         })
         .catch((err) =&gt; console.error(err));
     }
@@ -264,58 +268,60 @@ function OpenCard() {
     }
   }, [pathname]);
 &nbsp;
-  if (!openCard) {
-    return &lt;Loader /&gt;;
-<span class="branch-0 cbranch-no" title="branch not covered" >  }</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
-<span class="cstat-no" title="statement not covered" >    &lt;div className="open-card"&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;button</span>
-<span class="cstat-no" title="statement not covered" >        className="open-card-btn"</span>
-<span class="cstat-no" title="statement not covered" >        onClick={<span class="fstat-no" title="function not covered" >() =&gt; navigate(pathname.split('/').slice(0, 3).join('/'))}</span></span>
-<span class="cstat-no" title="statement not covered" >      &gt;</span>
-        ✕
-<span class="cstat-no" title="statement not covered" >      &lt;/button&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;h2 className="open-card-header"&gt;{openCard.name}&lt;/h2&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;div&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;span className="open-card-desc"&gt;Gender: &lt;/span&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;span&gt;{openCard.gender}&lt;/span&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;/div&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;div&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;span className="open-card-desc"&gt;Birthday: &lt;/span&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;span&gt;{openCard.birth_year}&lt;/span&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;/div&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;div&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;span className="open-card-desc"&gt;Created: &lt;/span&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;span&gt;{new Date(openCard.created).toLocaleString()}&lt;/span&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;/div&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;div&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;span className="open-card-desc"&gt;Edited: &lt;/span&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;span&gt;{new Date(openCard.edited).toLocaleString()}&lt;/span&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;/div&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;div&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;span className="open-card-desc"&gt;Height: &lt;/span&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;span&gt;{openCard.height}&lt;/span&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;/div&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;div&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;span className="open-card-desc"&gt;Weight: &lt;/span&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;span&gt;{openCard.mass}&lt;/span&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;/div&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;div&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;span className="open-card-desc"&gt;Color skin: &lt;/span&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;span&gt;{openCard.skin_color}&lt;/span&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;/div&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;div&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;span className="open-card-desc"&gt;Color hair: &lt;/span&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;span&gt;{openCard.hair_color}&lt;/span&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;/div&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;div&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;span className="open-card-desc"&gt;Color eye: &lt;/span&gt;</span>
-<span class="cstat-no" title="statement not covered" >        &lt;span&gt;{openCard.eye_color}&lt;/span&gt;</span>
-<span class="cstat-no" title="statement not covered" >      &lt;/div&gt;</span>
-<span class="cstat-no" title="statement not covered" >    &lt;/div&gt;</span>
+  return (
+    &lt;&gt;
+      {<span class="branch-0 cbranch-no" title="branch not covered" >openCard ? (</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div className="open-card"&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;button</span>
+<span class="cstat-no" title="statement not covered" >            className="open-card-btn"</span>
+<span class="cstat-no" title="statement not covered" >            onClick={<span class="fstat-no" title="function not covered" >() =&gt; navigate(pathname.split('/').slice(0, 3).join('/'))}</span></span>
+<span class="cstat-no" title="statement not covered" >          &gt;</span>
+            ✕
+<span class="cstat-no" title="statement not covered" >          &lt;/button&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;h2 className="open-card-header"&gt;{openCard.name}&lt;/h2&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span className="open-card-desc"&gt;Gender: &lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span&gt;{openCard.gender}&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span className="open-card-desc"&gt;Birthday: &lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span&gt;{openCard.birth_year}&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span className="open-card-desc"&gt;Created: &lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span&gt;{new Date(openCard.created).toLocaleString()}&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span className="open-card-desc"&gt;Edited: &lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span&gt;{new Date(openCard.edited).toLocaleString()}&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span className="open-card-desc"&gt;Height: &lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span&gt;{openCard.height}&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span className="open-card-desc"&gt;Weight: &lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span&gt;{openCard.mass}&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span className="open-card-desc"&gt;Color skin: &lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span&gt;{openCard.skin_color}&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span className="open-card-desc"&gt;Color hair: &lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span&gt;{openCard.hair_color}&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span className="open-card-desc"&gt;Color eye: &lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;span&gt;{openCard.eye_color}&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/div&gt;</span>
+      ) : (
+        &lt;Loader /&gt;
+      )}
+    &lt;/&gt;
   );
-<span class="cstat-no" title="statement not covered" >}</span>
+}
 &nbsp;
 export default OpenCard;
 &nbsp;</pre></td></tr></table></pre>
@@ -325,7 +331,7 @@ export default OpenCard;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-07-14T15:42:31.582Z
+                at 2024-07-14T23:59:05.289Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

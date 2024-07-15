@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import { request } from '../../api';
 import { requestObj } from '../../types';
 import Loader from '../Loader/Loader';
 import './OpenCard.scss';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setCurrentElement } from '../../redux/slices/application';
 
 const URL = 'https://swapi.dev/api/people/';
 
 function OpenCard() {
   const [openCard, setOpenCard] = useState<requestObj | null>(null);
-
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { currentElement } = useAppSelector((state) => state.application);
 
   useEffect(() => {
     async function requestCard() {
       setOpenCard(null);
-      request<requestObj>(URL + pathname.split('/')[4])
+      request<requestObj>(URL + currentElement)
         .then((data) => {
           if (typeof data !== 'string') {
             setOpenCard(data);
@@ -24,10 +24,10 @@ function OpenCard() {
         })
         .catch((err) => console.error(err));
     }
-    if (pathname.split('/')[4]) {
+    if (currentElement) {
       requestCard();
     }
-  }, [pathname]);
+  }, [currentElement]);
 
   return (
     <>
@@ -35,7 +35,7 @@ function OpenCard() {
         <div className="open-card">
           <button
             className="open-card-btn"
-            onClick={() => navigate(pathname.split('/').slice(0, 3).join('/'))}
+            onClick={() => dispatch(setCurrentElement(''))}
           >
             ✕
           </button>

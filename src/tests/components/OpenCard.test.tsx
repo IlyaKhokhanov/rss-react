@@ -33,7 +33,7 @@ describe('OpenCard', () => {
         ...vi.importMock('react-router-dom'),
         useLocation: () => ({
           search: '',
-          pathname: '1/1/1/1/1/1/1/ ',
+          pathname: '/page/1/details/1',
         }),
         useNavigate: () => vi.fn(),
         Link: ({ children, to }: { children: JSX.Element; to: string }) =>

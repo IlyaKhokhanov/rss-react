@@ -20,7 +20,7 @@ type requestObj = {
 };
 
 interface IState {
-  currentPage: number;
+  currentPage: number | null;
   searchString: string;
   list: requestObj[];
   isLoading: boolean;

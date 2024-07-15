@@ -1,29 +1,26 @@
 import { Link } from 'react-router-dom';
 import { requestObj } from '../../types';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setCurrentElement } from '../../redux/slices/application';
 import './Card.scss';
 
 type CardProps = {
   card: requestObj;
-  currentElement: string;
-  setCurrentElement: (url: string) => void;
 };
 
-function Card({ card, currentElement, setCurrentElement }: CardProps) {
-  const isActive =
-    currentElement === card.url.split('/')[card.url.split('/').length - 2];
+function Card({ card }: CardProps) {
+  const dispatch = useAppDispatch();
+  const { currentElement } = useAppSelector((state) => state.application);
+
+  const cardId = card.url.split('/')[card.url.split('/').length - 2];
+  const isActive = currentElement === cardId;
 
   return (
     <Link
       className={isActive ? 'list-item-active' : 'list-item'}
-      to={
-        isActive
-          ? ''
-          : `details/${card.url.split('/')[card.url.split('/').length - 2]}`
-      }
+      to={isActive ? '' : `details/${cardId}`}
       onClick={() => {
-        setCurrentElement(
-          isActive ? '' : card.url.split('/')[card.url.split('/').length - 2],
-        );
+        dispatch(setCurrentElement(isActive ? '' : cardId));
       }}
     >
       <h3 className="list-item-header">{card.name}</h3>

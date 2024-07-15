@@ -1,24 +1,16 @@
 import Card from '../Card/Card';
-import { IState } from '../../types';
 import './List.scss';
+import { useAppSelector } from '../../hooks';
 
-type ListProps = {
-  data: IState;
-  setCurrentElement: (url: string) => void;
-};
+function List() {
+  const { list } = useAppSelector((state) => state.application);
 
-function List({ data, setCurrentElement }: ListProps) {
   return (
     <>
-      {data.list.length ? (
+      {list && list.length ? (
         <ul className="list">
-          {data.list.map((el, indx) => (
-            <Card
-              key={indx}
-              card={el}
-              currentElement={data.currentElement}
-              setCurrentElement={setCurrentElement}
-            />
+          {list.map((el, indx) => (
+            <Card key={indx} card={el} />
           ))}
         </ul>
       ) : (

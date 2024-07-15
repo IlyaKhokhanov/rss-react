@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import App from '../../App';
 import React from 'react';
 import * as requestApi from '../../api';
+import MainPage from '../../components/MainPage/MainPage';
 
-describe('App', () => {
+describe('MainPage', () => {
   it('should render App', () => {
     vi.mock('react-router-dom', async () => {
       return {
@@ -20,7 +20,7 @@ describe('App', () => {
       };
     });
 
-    render(<App />);
+    render(<MainPage />);
 
     const heading = screen.getByRole('heading');
     expect(heading).toBeInTheDocument();
@@ -38,7 +38,7 @@ describe('App', () => {
         ...vi.importMock('react-router-dom'),
         useLocation: () => ({
           search: '',
-          pathname: '1/1/1/1/1/1/1/ ',
+          pathname: '/page/1/details/1',
         }),
         useNavigate: () => vi.fn(),
         Link: ({ children, to }: { children: JSX.Element; to: string }) =>
@@ -116,7 +116,7 @@ describe('App', () => {
       new Promise((resolve) => resolve(mockResolveValue)),
     );
 
-    render(<App />);
+    render(<MainPage />);
 
     console.log(screen.getAllByRole('button'));
   });

@@ -1,17 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { request } from '../../api';
 import { requestObj } from '../../types';
 import Loader from '../Loader/Loader';
 import './OpenCard.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCurrentElement } from '../../redux/slices/application';
+import { deleteItem, setItem } from '../../redux/slices/selectedItems';
 
 const URL = 'https://swapi.dev/api/people/';
 
 function OpenCard() {
-  const [openCard, setOpenCard] = useState<requestObj | null>(null);
   const dispatch = useAppDispatch();
+  const { list } = useAppSelector((state) => state.selectedItems);
   const { currentElement } = useAppSelector((state) => state.application);
+  const [openCard, setOpenCard] = useState<requestObj | null>(null);
+  const isSelected = useMemo(
+    () => Boolean(list.find((el) => el.id === currentElement)),
+    [list, currentElement],
+  );
 
   useEffect(() => {
     async function requestCard() {
@@ -75,6 +81,26 @@ function OpenCard() {
           <div>
             <span className="open-card-desc">Color eye: </span>
             <span>{openCard.eye_color}</span>
+          </div>
+          <div
+            className="item-checkbox"
+            onClick={(e) => {
+              e.stopPropagation();
+              if (isSelected) {
+                dispatch(deleteItem(currentElement));
+              } else {
+                dispatch(
+                  setItem({
+                    id: currentElement,
+                    url: openCard.url,
+                    name: openCard.name,
+                  }),
+                );
+              }
+            }}
+          >
+            <input type="checkbox" checked={isSelected} />
+            {isSelected ? 'Cancel the selection' : 'Select item'}
           </div>
         </div>
       ) : (

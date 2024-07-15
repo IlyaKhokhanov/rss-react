@@ -17,6 +17,7 @@ import {
   setError,
   setDarkTheme,
 } from '../../redux/slices/application';
+import FlyoutElement from '../FlyoutElement/FlyoutElement';
 
 function MainPage() {
   const dispatch = useAppDispatch();
@@ -102,6 +103,7 @@ function MainPage() {
         </div>
         {currentElement && <Outlet />}
       </div>
+      <FlyoutElement />
     </div>
   );
 }

@@ -45,10 +45,17 @@ interface ErrorBoundaryState {
   hasError: boolean;
 }
 
+interface ISelectedItem {
+  name: string;
+  url: string;
+  id: string;
+}
+
 export {
   type requestObj,
   type IRequestList,
   type IState,
   type ErrorBoundaryProps,
   type ErrorBoundaryState,
+  type ISelectedItem,
 };

@@ -1,8 +1,9 @@
-import { Link } from 'react-router-dom';
 import { requestObj } from '../../types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCurrentElement } from '../../redux/slices/application';
 import './Card.scss';
+import { deleteItem, setItem } from '../../redux/slices/selectedItems';
+import { useMemo } from 'react';
 
 type CardProps = {
   card: requestObj;
@@ -11,14 +12,18 @@ type CardProps = {
 function Card({ card }: CardProps) {
   const dispatch = useAppDispatch();
   const { currentElement } = useAppSelector((state) => state.application);
+  const { list } = useAppSelector((state) => state.selectedItems);
 
   const cardId = card.url.split('/')[card.url.split('/').length - 2];
   const isActive = currentElement === cardId;
+  const isSelected = useMemo(
+    () => Boolean(list.find((el) => el.id === cardId)),
+    [list],
+  );
 
   return (
-    <Link
+    <li
       className={isActive ? 'list-item-active' : 'list-item'}
-      to={isActive ? '' : `details/${cardId}`}
       onClick={() => {
         dispatch(setCurrentElement(isActive ? '' : cardId));
       }}
@@ -40,7 +45,21 @@ function Card({ card }: CardProps) {
         <span className="list-item-desc">Color hair: </span>
         <span>{card.hair_color}</span>
       </div>
-    </Link>
+      <div
+        className="item-checkbox"
+        onClick={(e) => {
+          e.stopPropagation();
+          if (isSelected) {
+            dispatch(deleteItem(cardId));
+          } else {
+            dispatch(setItem({ id: cardId, url: card.url, name: card.name }));
+          }
+        }}
+      >
+        <input type="checkbox" checked={isSelected} />
+        {isSelected ? 'Cancel the selection' : 'Select item'}
+      </div>
+    </li>
   );
 }
 

@@ -9,12 +9,12 @@ function ExportCSV({ data, fileName }: ExportCSV) {
   const downloadCSV = () => {
     const csvString = [
       ...data.map((item) => [
-        `id: ${item.id}`,
-        `  Name: ${item.name}`,
+        `id: ${item.id}  `,
+        `  Name: ${item.name}  `,
         `  URL: ${item.url}`,
       ]),
     ]
-      .map((row) => row.join(','))
+      .map((row) => row.join('|'))
       .join('\n');
 
     const blob = new Blob([csvString], { type: 'text/csv' });

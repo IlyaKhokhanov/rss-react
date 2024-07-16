@@ -1,13 +1,11 @@
 import { useEffect } from 'react';
-import { request } from '../../api';
-import { IRequestList } from '../../types';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import List from '../List/List';
 import Search from '../Search/Search';
 import Loader from '../Loader/Loader';
 import Pagination from '../Pagination/Pagination';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import FlyoutElement from '../FlyoutElement/FlyoutElement';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import './MainPage.scss';
 import {
   setCountElements,
   setList,
@@ -17,9 +15,12 @@ import {
   setError,
   setDarkTheme,
 } from '../../redux/slices/application';
-import FlyoutElement from '../FlyoutElement/FlyoutElement';
+import { requestAPI } from '../../redux/requestService';
+import './MainPage.scss';
 
 function MainPage() {
+  const params = useParams();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const {
     currentPage,
@@ -30,40 +31,29 @@ function MainPage() {
     isDarkTheme,
   } = useAppSelector((state) => state.application);
 
-  const params = useParams();
-  const navigate = useNavigate();
+  const queryList = requestAPI.useFetchAllItemsQuery({
+    search: searchString,
+    page: currentPage || 1,
+  });
 
   useEffect(() => {
     dispatch(setCurrentPage(params.page ? +params.page : 1));
     dispatch(setCurrentElement(params.id ? params.id : null));
-  }, [params]);
-
-  function updateList() {
-    dispatch(setLoading(true));
-    if (currentPage)
-      request<IRequestList>(
-        `https://swapi.dev/api/people/?page=${currentPage}&search=${searchString}`,
-      )
-        .then((data) => {
-          if (typeof data !== 'string') {
-            dispatch(setList(data.results));
-            dispatch(setLoading(false));
-            dispatch(setCountElements(data.count));
-          }
-        })
-        .catch((err) => console.error(err));
-  }
+  }, [params, dispatch]);
 
   useEffect(() => {
-    updateList();
-  }, [currentPage, searchString]);
-
-  useEffect(() => {
-    function addError() {
-      if (hasError) throw new Error('Error');
-    }
-    addError();
-  }, [hasError]);
+    dispatch(setLoading(queryList.isLoading || queryList.isFetching));
+    if (queryList.data) {
+      dispatch(setList(queryList.data.results));
+      dispatch(setCountElements(queryList.data.count));
+    } else if (queryList.error) dispatch(setError(true));
+  }, [
+    queryList.data,
+    queryList.isFetching,
+    queryList.isLoading,
+    queryList.error,
+    dispatch,
+  ]);
 
   useEffect(() => {
     if (currentElement) {
@@ -71,7 +61,14 @@ function MainPage() {
     } else {
       navigate('/page/' + currentPage);
     }
-  }, [currentPage, currentElement]);
+  }, [currentPage, currentElement, navigate]);
+
+  useEffect(() => {
+    function addError() {
+      if (hasError) throw new Error('Error');
+    }
+    addError();
+  }, [hasError]);
 
   return (
     <div className={`app ${isDarkTheme ? 'dark-theme' : ''}`}>
@@ -87,11 +84,11 @@ function MainPage() {
         </button>
       </div>
       <Search />
-      <div className="main">
-        <div
-          className="block-left"
-          style={{ width: currentElement ? '50%' : '100%' }}
-        >
+      <div
+        className="main"
+        style={{ gridTemplateColumns: currentElement ? '1.5fr 1fr' : '1fr' }}
+      >
+        <div className="block-left">
           {isLoading ? (
             <Loader />
           ) : (

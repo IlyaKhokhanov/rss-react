@@ -14,22 +14,29 @@
   }
 
   &-btn {
-    padding: 7px 36px;
+    padding: 8px 36px;
     border: none;
     border-radius: 3px;
     cursor: pointer;
     background: #0cb4f1;
     color: #fff;
     font-size: 18px;
+
+    &:hover {
+      opacity: 0.7;
+    }
   }
 }
 
 .dark-theme {
-  .header-input {
-    background: #33383d;
-    color: #fff;
+  .header {
+    &-input {
+      background: #33383d;
+      color: #fff;
+    }
 
     &-btn {
+      background: #181818;
       color: #fff;
     }
   }

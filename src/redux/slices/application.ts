@@ -3,7 +3,7 @@ import { IState } from '../../types';
 
 const initialState: IState = {
   currentPage: null,
-  searchString: '',
+  searchString: localStorage.getItem('searchString') || '',
   list: [],
   isLoading: true,
   countElements: 0,

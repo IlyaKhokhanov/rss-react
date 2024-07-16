@@ -18,8 +18,21 @@ function Card({ card }: CardProps) {
   const isActive = currentElement === cardId;
   const isSelected = useMemo(
     () => Boolean(list.find((el) => el.id === cardId)),
-    [list],
+    [list, cardId],
   );
+
+  function checkHandler(
+    e?:
+      | React.MouseEvent<HTMLDivElement, MouseEvent>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) {
+    if (e) e.stopPropagation();
+    if (isSelected) {
+      dispatch(deleteItem(cardId));
+    } else {
+      dispatch(setItem({ id: cardId, url: card.url, name: card.name }));
+    }
+  }
 
   return (
     <li
@@ -45,18 +58,8 @@ function Card({ card }: CardProps) {
         <span className="list-item-desc">Color hair: </span>
         <span>{card.hair_color}</span>
       </div>
-      <div
-        className="item-checkbox"
-        onClick={(e) => {
-          e.stopPropagation();
-          if (isSelected) {
-            dispatch(deleteItem(cardId));
-          } else {
-            dispatch(setItem({ id: cardId, url: card.url, name: card.name }));
-          }
-        }}
-      >
-        <input type="checkbox" checked={isSelected} />
+      <div className="item-checkbox" onClick={checkHandler}>
+        <input type="checkbox" checked={isSelected} onChange={checkHandler} />
         {isSelected ? 'Cancel the selection' : 'Select item'}
       </div>
     </li>

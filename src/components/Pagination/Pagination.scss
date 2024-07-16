@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
 
   &-item,
   &-item-active {
@@ -35,6 +35,10 @@
     &-item {
       background: #33383d;
       color: #fff;
+
+      &-active {
+        background: #181818;
+      }
     }
   }
 }

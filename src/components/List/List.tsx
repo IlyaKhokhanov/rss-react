@@ -1,6 +1,6 @@
 import Card from '../Card/Card';
-import './List.scss';
 import { useAppSelector } from '../../hooks';
+import './List.scss';
 
 function List() {
   const { list } = useAppSelector((state) => state.application);

@@ -1,10 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import createFetchMock, { FetchMock } from 'vitest-fetch-mock';
 import { mockList } from '../mock';
-import { MemoryRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store } from '../../redux/store';
-import MainPage from '../../components/MainPage/MainPage';
+import App from '../../App';
 
 const fetchMock: FetchMock = createFetchMock(vi);
 fetchMock.enableMocks();
@@ -14,18 +11,11 @@ describe('App', () => {
     fetchMock.resetMocks();
   });
 
-  it('should render All App', async () => {
+  it('should rendering Error', async () => {
     fetchMock.mockResponse(JSON.stringify(mockList));
-
-    render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <MainPage />
-        </Provider>
-      </MemoryRouter>,
-    );
+    render(<App />);
 
     const head = await screen.getByRole('heading');
-    expect(head).toHaveTextContent('Loading');
+    expect(head).toHaveTextContent('Something went wrong');
   });
 });

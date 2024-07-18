@@ -59,9 +59,12 @@
     "jsdom": "^24.1.0",
     "lint-staged": "^15.2.7",
     "prettier": "^3.3.2",
+    "redux-mock-store": "^1.5.4",
     "sass": "^1.77.6",
     "typescript": "^5.2.2",
     "vite": "^5.3.1",
-    "vitest": "^2.0.2"
+    "vitest": "^2.0.2",
+    "vitest-fetch-mock": "^0.3.0",
+    "whatwg-fetch": "^3.6.20"
   }
 }

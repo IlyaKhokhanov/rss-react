@@ -1,78 +1,35 @@
 import { render, screen } from '@testing-library/react';
-import React from 'react';
+import createFetchMock, { FetchMock } from 'vitest-fetch-mock';
+import { mockCard } from '../mock';
+import { MemoryRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '../../redux/store';
+import MainPage from '../../components/MainPage/MainPage';
 import OpenCard from '../../components/OpenCard/OpenCard';
-import * as requestApi from '../../api';
+
+const fetchMock: FetchMock = createFetchMock(vi);
+fetchMock.enableMocks();
+
+beforeEach((): void => {
+  fetchMock.resetMocks();
+});
 
 describe('OpenCard', () => {
-  it('shoud be empty card', async () => {
-    vi.mock('react-router-dom', async () => {
-      return {
-        ...vi.importMock('react-router-dom'),
-        useLocation: () => ({
-          search: '',
-          pathname: ' ',
-        }),
-        useNavigate: () => vi.fn(),
-        Link: ({ children, to }: { children: JSX.Element; to: string }) =>
-          React.createElement('a', { href: to }, children),
-        Router: () => vi.fn(),
-      };
-    });
+  it('should', async () => {
+    fetchMock.mockResponse(JSON.stringify(mockCard));
 
-    render(<OpenCard />);
-
-    const name = screen.getByText('Loading...');
-
-    expect(name).toBeInTheDocument();
-    expect(name).toHaveTextContent('Loading...');
-  });
-
-  it('should card clicked', async () => {
-    vi.mock('react-router-dom', async () => {
-      return {
-        ...vi.importMock('react-router-dom'),
-        useLocation: () => ({
-          search: '',
-          pathname: '/page/1/details/1',
-        }),
-        useNavigate: () => vi.fn(),
-        Link: ({ children, to }: { children: JSX.Element; to: string }) =>
-          React.createElement('a', { href: to }, children),
-        Router: () => vi.fn(),
-      };
-    });
-
-    const mockResolveValue = {
-      birth_year: '132',
-      created: new Date(),
-      edited: new Date(),
-      eye_color: 'red',
-      films: [],
-      gender: 'Male',
-      hair_color: 'brown',
-      height: '182',
-      homeworld: 'Earth',
-      mass: '64',
-      name: 'Ben',
-      skin_color: 'string',
-      species: [],
-      starships: [],
-      url: '1/1/1/1/1/1/1',
-      vehicles: [],
-    };
-
-    const setState = vi.fn();
-
-    const fetchSpy = vi.spyOn(requestApi, 'request');
-
-    const state = vi.spyOn(React, 'useState');
-
-    state.mockReturnValue([mockResolveValue, setState]);
-
-    fetchSpy.mockReturnValue(
-      new Promise((resolve) => resolve(mockResolveValue)),
+    render(
+      <MemoryRouter initialEntries={['/page/1/details/1']}>
+        <Provider store={store}>
+          <Routes>
+            <Route path="/" element={<Navigate to="/page/1" />} />
+            <Route path="/page" element={<Navigate to="/page/1" />} />
+            <Route path="/page/:page" element={<MainPage />}>
+              <Route path="details/:id" element={<OpenCard />} />
+            </Route>
+          </Routes>
+        </Provider>
+      </MemoryRouter>,
     );
-
-    render(<OpenCard />);
   });
 });

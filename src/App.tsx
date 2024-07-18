@@ -12,6 +12,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigate to="/page/1" />} />
+          <Route path="/page" element={<Navigate to="/page/1" />} />
           <Route path="/page/:page" element={<MainPage />}>
             <Route path="details/:id" element={<OpenCard />} />
           </Route>

@@ -5,13 +5,15 @@ import './FlyoutElement.scss';
 
 function FlyoutElement() {
   const dispatch = useAppDispatch();
-  const { list } = useAppSelector((state) => state.selectedItems);
+  const { selectedList } = useAppSelector((state) => state.selectedItems);
 
   return (
     <>
-      {Boolean(list.length) && (
+      {Boolean(selectedList.length) && (
         <div className="flyout">
-          <h2 className="flyout-header">Heroes selected: {list.length}</h2>
+          <h2 className="flyout-header">
+            Heroes selected: {selectedList.length}
+          </h2>
           <div className="flyout-btns">
             <button
               className="flyout-delete"
@@ -20,7 +22,10 @@ function FlyoutElement() {
               Unselect all
             </button>
 
-            <ExportCSV data={list} fileName={`${list.length}_heroes.csv`} />
+            <ExportCSV
+              data={selectedList}
+              fileName={`${selectedList.length}_heroes.csv`}
+            />
           </div>
         </div>
       )}

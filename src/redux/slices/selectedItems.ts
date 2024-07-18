@@ -2,11 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 import { ISelectedItem } from '../../types';
 
 type selectedItemsState = {
-  list: ISelectedItem[];
+  selectedList: ISelectedItem[];
 };
 
 const initialState: selectedItemsState = {
-  list: [],
+  selectedList: [],
 };
 
 const selectedItems = createSlice({
@@ -14,13 +14,15 @@ const selectedItems = createSlice({
   initialState,
   reducers: {
     setItem(state, action) {
-      state.list = [...state.list, action.payload];
+      state.selectedList = [...state.selectedList, action.payload];
     },
     deleteItem(state, action) {
-      state.list = state.list.filter((el) => el.id !== action.payload);
+      state.selectedList = state.selectedList.filter(
+        (el) => el.id !== action.payload,
+      );
     },
     deleteAllItems(state) {
-      state.list = [];
+      state.selectedList = [];
     },
   },
 });

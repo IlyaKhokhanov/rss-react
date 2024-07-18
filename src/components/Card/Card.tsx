@@ -12,13 +12,13 @@ type CardProps = {
 function Card({ card }: CardProps) {
   const dispatch = useAppDispatch();
   const { currentElement } = useAppSelector((state) => state.application);
-  const { list } = useAppSelector((state) => state.selectedItems);
+  const { selectedList } = useAppSelector((state) => state.selectedItems);
 
   const cardId = card.url.split('/')[card.url.split('/').length - 2];
   const isActive = currentElement === cardId;
   const isSelected = useMemo(
-    () => Boolean(list.find((el) => el.id === cardId)),
-    [list, cardId],
+    () => Boolean(selectedList.find((el) => el.id === cardId)),
+    [selectedList, cardId],
   );
 
   function checkHandler(

@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import createFetchMock, { FetchMock } from 'vitest-fetch-mock';
+import userEvent from '@testing-library/user-event';
 import { mockList } from '../mock';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -25,7 +26,12 @@ describe('App', () => {
       </MemoryRouter>,
     );
 
-    const head = await screen.getByRole('heading');
-    expect(head).toHaveTextContent('Loading');
+    const themeButton = await screen.getByText('Turn on the dark theme');
+    const user = userEvent.setup();
+    await user.click(themeButton);
+
+    const card = screen.getByText('Pasha');
+    await user.click(card);
+    expect(themeButton).toHaveTextContent('Turn on a light theme');
   });
 });

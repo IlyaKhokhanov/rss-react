@@ -9,13 +9,13 @@ import './OpenCard.scss';
 
 function OpenCard() {
   const dispatch = useAppDispatch();
-  const { list } = useAppSelector((state) => state.selectedItems);
+  const { selectedList } = useAppSelector((state) => state.selectedItems);
   const { currentElement } = useAppSelector((state) => state.application);
   const [openCard, setOpenCard] = useState<requestObj | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const isSelected = useMemo(
-    () => Boolean(list.find((el) => el.id === currentElement)),
-    [list, currentElement],
+    () => Boolean(selectedList.find((el) => el.id === currentElement)),
+    [selectedList, currentElement],
   );
   const queryItem = requestAPI.useFetchOneItemQuery(currentElement);
 

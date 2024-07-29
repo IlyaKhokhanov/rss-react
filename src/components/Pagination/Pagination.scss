@@ -5,6 +5,10 @@
   align-items: center;
   gap: 10px;
 
+  a {
+    color: #000;
+  }
+
   &-item,
   &-item-active {
     padding: 5px 10px;
@@ -24,10 +28,6 @@
     color: #fff;
     cursor: default;
   }
-
-  a {
-    color: #000;
-  }
 }
 
 .dark-theme {
@@ -35,10 +35,10 @@
     &-item {
       background: #33383d;
       color: #fff;
+    }
 
-      &-active {
-        background: #181818;
-      }
+    &-item-active {
+      background: #181818;
     }
   }
 }

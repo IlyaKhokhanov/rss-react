@@ -11,32 +11,32 @@
   justify-content: center;
   gap: 10px;
   border-radius: 7px;
+}
 
-  &-header {
-    padding: 10px;
-    background: transparent;
-  }
+.header {
+  padding: 10px;
+  background: transparent;
+}
 
-  &-btns {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-  }
+.btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
 
-  &-delete {
-    margin-bottom: 20px;
-    padding: 6px 36px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-    background: #ff0000;
-    color: #fff;
-    font-size: 18px;
+.delete {
+  margin-bottom: 20px;
+  padding: 6px 36px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  background: #ff0000;
+  color: #fff;
+  font-size: 18px;
 
-    &:hover {
-      opacity: 0.7;
-    }
+  &:hover {
+    opacity: 0.7;
   }
 }
 

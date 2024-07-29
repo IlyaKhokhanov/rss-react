@@ -1,28 +1,31 @@
-import React, { useState } from 'react';
-import './Search.scss';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector, useLocalStorage } from '../../hooks';
 import { setSearchString } from '../../redux/slices/application';
 
 function Search() {
   const dispatch = useAppDispatch();
   const { searchString } = useAppSelector((state) => state.application);
-  const [value, setValue] = useState(searchString);
+  const [state, setValue] = useLocalStorage('searchString', '');
 
   function inputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setValue(e.target.value);
   }
 
+  useEffect(() => {
+    dispatch(setSearchString(state));
+  }, []);
+
   return (
-    <div className="header">
+    <div className="search">
       <input
-        className="header-input"
+        className="search-input"
         defaultValue={searchString}
         type="text"
         onChange={inputChange}
       />
       <button
-        className="header-btn"
-        onClick={() => dispatch(setSearchString(value))}
+        className="search-btn"
+        onClick={() => dispatch(setSearchString(state))}
       >
         Search
       </button>

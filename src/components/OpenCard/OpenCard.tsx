@@ -2,15 +2,17 @@ import { useEffect, useMemo, useState } from 'react';
 import { requestObj } from '../../types';
 import Loader from '../Loader/Loader';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setCurrentElement } from '../../redux/slices/application';
 import { deleteItem, setItem } from '../../redux/slices/selectedItems';
 import { requestAPI } from '../../redux/requestService';
-import './OpenCard.scss';
+import { useRouter } from 'next/router';
 
 function OpenCard() {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const { selectedList } = useAppSelector((state) => state.selectedItems);
-  const { currentElement } = useAppSelector((state) => state.application);
+  const { currentElement, currentPage } = useAppSelector(
+    (state) => state.application,
+  );
   const [openCard, setOpenCard] = useState<requestObj | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const isSelected = useMemo(
@@ -31,8 +33,12 @@ function OpenCard() {
     queryItem.isLoading,
   ]);
 
-  function checkHandler(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    e.stopPropagation();
+  function checkHandler(
+    e?:
+      | React.MouseEvent<HTMLDivElement, MouseEvent>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) {
+    if (e) e.stopPropagation();
     if (isSelected) {
       dispatch(deleteItem(currentElement));
     } else {
@@ -57,7 +63,11 @@ function OpenCard() {
         <div className="open-card">
           <button
             className="open-card-btn"
-            onClick={() => dispatch(setCurrentElement(''))}
+            onClick={() => {
+              router.push({
+                pathname: '/page/' + currentPage,
+              });
+            }}
           >
             ✕
           </button>
@@ -102,7 +112,7 @@ function OpenCard() {
             <input
               type="checkbox"
               checked={isSelected}
-              onChange={checkboxClick}
+              onChange={checkHandler}
             />
             {isSelected ? 'Cancel the selection' : 'Select item'}
           </div>
@@ -113,5 +123,3 @@ function OpenCard() {
 }
 
 export default OpenCard;
-
-function checkboxClick() {}

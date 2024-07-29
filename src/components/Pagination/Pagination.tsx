@@ -1,16 +1,27 @@
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setCurrentPage } from '../../redux/slices/application';
-import './Pagination.scss';
+import { useRouter } from 'next/router';
+import { useAppSelector } from '../../hooks';
 
 function Pagination() {
-  const dispatch = useAppDispatch();
-  const { countElements, itemsPerPage, currentPage } = useAppSelector(
-    (state) => state.application,
-  );
+  const router = useRouter();
+
+  const { countElements, itemsPerPage, currentPage, currentElement } =
+    useAppSelector((state) => state.application);
 
   const numbersArr = [];
   for (let i = 1; i <= Math.ceil(countElements / itemsPerPage); i++) {
     numbersArr.push(i);
+  }
+
+  function clickHandler(el: number) {
+    if (currentElement) {
+      router.push({
+        pathname: '/page/' + el + '/details/' + currentElement,
+      });
+    } else {
+      router.push({
+        pathname: '/page/' + el,
+      });
+    }
   }
 
   return (
@@ -21,7 +32,7 @@ function Pagination() {
           className={
             el === currentPage ? 'pagination-item-active' : 'pagination-item'
           }
-          onClick={() => dispatch(setCurrentPage(el))}
+          onClick={() => clickHandler(el)}
         >
           {el}
         </li>

@@ -55,7 +55,7 @@ function Card({ card }: CardProps) {
         <span>{card.hair_color}</span>
       </div>
       <div className="item-checkbox" onClick={checkHandler}>
-        <input type="checkbox" checked={isSelected} />
+        <input type="checkbox" checked={isSelected} onChange={checkboxClick} />
         {isSelected ? 'Cancel the selection' : 'Select item'}
       </div>
     </li>
@@ -63,3 +63,5 @@ function Card({ card }: CardProps) {
 }
 
 export default Card;
+
+function checkboxClick() {}

@@ -99,7 +99,11 @@ function OpenCard() {
             <span>{openCard.eye_color}</span>
           </div>
           <div className="item-checkbox" onClick={checkHandler}>
-            <input type="checkbox" checked={isSelected} />
+            <input
+              type="checkbox"
+              checked={isSelected}
+              onChange={checkboxClick}
+            />
             {isSelected ? 'Cancel the selection' : 'Select item'}
           </div>
         </div>
@@ -109,3 +113,5 @@ function OpenCard() {
 }
 
 export default OpenCard;
+
+function checkboxClick() {}

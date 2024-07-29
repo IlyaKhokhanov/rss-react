@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import List from '../List/List';
 import Search from '../Search/Search';
@@ -13,23 +13,18 @@ import {
   setCurrentElement,
   setCurrentPage,
   setError,
-  setDarkTheme,
 } from '../../redux/slices/application';
 import { requestAPI } from '../../redux/requestService';
 import './MainPage.scss';
+import { ThemeContext } from '../../context/ThemeContext';
 
 function MainPage() {
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const {
-    currentPage,
-    searchString,
-    currentElement,
-    hasError,
-    isLoading,
-    isDarkTheme,
-  } = useAppSelector((state) => state.application);
+  const { currentPage, searchString, currentElement, hasError, isLoading } =
+    useAppSelector((state) => state.application);
+  const { isDarkTheme, toggleTheme } = useContext(ThemeContext);
 
   const queryList = requestAPI.useFetchAllItemsQuery({
     search: searchString,
@@ -76,10 +71,7 @@ function MainPage() {
         <button className="error-btn" onClick={() => dispatch(setError(true))}>
           Generate ERROR
         </button>
-        <button
-          className="theme-button"
-          onClick={() => dispatch(setDarkTheme(!isDarkTheme))}
-        >
+        <button className="theme-button" onClick={() => toggleTheme()}>
           {isDarkTheme ? 'Turn on a light theme' : 'Turn on the dark theme'}
         </button>
       </div>

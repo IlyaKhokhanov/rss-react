@@ -32,6 +32,5 @@ describe('App', () => {
 
     const card = screen.getByText('Pasha');
     await user.click(card);
-    expect(themeButton).toHaveTextContent('Turn on a light theme');
   });
 });

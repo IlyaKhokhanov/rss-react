@@ -28,7 +28,6 @@ interface IState {
   itemsPerPage: number;
   currentElement: string;
   hasError: boolean;
-  isDarkTheme: boolean;
 }
 
 interface IRequestList {

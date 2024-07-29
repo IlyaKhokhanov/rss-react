@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import App from './App';
 import { store } from './redux/store';
 import './index.scss';
+import { ThemeProvider } from './context/ThemeProvider';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -10,6 +11,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <Provider store={store}>
-    <App />
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
   </Provider>,
 );

@@ -10,7 +10,6 @@ const initialState: IState = {
   itemsPerPage: 10,
   currentElement: '',
   hasError: false,
-  isDarkTheme: false,
 };
 
 const catalogSlice = createSlice({
@@ -40,9 +39,6 @@ const catalogSlice = createSlice({
     setError(state, action) {
       state.hasError = action.payload;
     },
-    setDarkTheme(state, action) {
-      state.isDarkTheme = action.payload;
-    },
   },
 });
 
@@ -54,7 +50,6 @@ export const {
   setLoading,
   setList,
   setError,
-  setDarkTheme,
 } = catalogSlice.actions;
 
 export default catalogSlice.reducer;

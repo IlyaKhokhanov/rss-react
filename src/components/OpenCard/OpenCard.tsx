@@ -31,12 +31,8 @@ function OpenCard() {
     queryItem.isLoading,
   ]);
 
-  function checkHandler(
-    e?:
-      | React.MouseEvent<HTMLDivElement, MouseEvent>
-      | React.ChangeEvent<HTMLInputElement>,
-  ) {
-    if (e) e.stopPropagation();
+  function checkHandler(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    e.stopPropagation();
     if (isSelected) {
       dispatch(deleteItem(currentElement));
     } else {
@@ -103,11 +99,7 @@ function OpenCard() {
             <span>{openCard.eye_color}</span>
           </div>
           <div className="item-checkbox" onClick={checkHandler}>
-            <input
-              type="checkbox"
-              checked={isSelected}
-              onChange={checkHandler}
-            />
+            <input type="checkbox" checked={isSelected} />
             {isSelected ? 'Cancel the selection' : 'Select item'}
           </div>
         </div>

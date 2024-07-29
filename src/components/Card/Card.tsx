@@ -21,12 +21,8 @@ function Card({ card }: CardProps) {
     [selectedList, cardId],
   );
 
-  function checkHandler(
-    e?:
-      | React.MouseEvent<HTMLDivElement, MouseEvent>
-      | React.ChangeEvent<HTMLInputElement>,
-  ) {
-    if (e) e.stopPropagation();
+  function checkHandler(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    e.stopPropagation();
     if (isSelected) {
       dispatch(deleteItem(cardId));
     } else {
@@ -59,7 +55,7 @@ function Card({ card }: CardProps) {
         <span>{card.hair_color}</span>
       </div>
       <div className="item-checkbox" onClick={checkHandler}>
-        <input type="checkbox" checked={isSelected} onChange={checkHandler} />
+        <input type="checkbox" checked={isSelected} />
         {isSelected ? 'Cancel the selection' : 'Select item'}
       </div>
     </li>

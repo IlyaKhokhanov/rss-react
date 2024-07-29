@@ -1,4 +1,6 @@
-import { useRouter } from 'next/router';
+'use client';
+
+import { useRouter } from 'next/navigation';
 import { useAppSelector } from '../../hooks';
 
 function Pagination() {
@@ -14,13 +16,9 @@ function Pagination() {
 
   function clickHandler(el: number) {
     if (currentElement) {
-      router.push({
-        pathname: '/page/' + el + '/details/' + currentElement,
-      });
+      router.push('/page/' + el + '/details/' + currentElement);
     } else {
-      router.push({
-        pathname: '/page/' + el,
-      });
+      router.push('/page/' + el);
     }
   }
 

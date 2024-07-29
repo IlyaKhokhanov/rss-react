@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useMemo, useState } from 'react';
 import { requestObj } from '../../types';
 import Loader from '../Loader/Loader';
@@ -33,12 +35,8 @@ function OpenCard() {
     queryItem.isLoading,
   ]);
 
-  function checkHandler(
-    e?:
-      | React.MouseEvent<HTMLDivElement, MouseEvent>
-      | React.ChangeEvent<HTMLInputElement>,
-  ) {
-    if (e) e.stopPropagation();
+  function checkHandler(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    e.stopPropagation();
     if (isSelected) {
       dispatch(deleteItem(currentElement));
     } else {
@@ -112,7 +110,7 @@ function OpenCard() {
             <input
               type="checkbox"
               checked={isSelected}
-              onChange={checkHandler}
+              onChange={checkboxClick}
             />
             {isSelected ? 'Cancel the selection' : 'Select item'}
           </div>
@@ -123,3 +121,5 @@ function OpenCard() {
 }
 
 export default OpenCard;
+
+function checkboxClick() {}

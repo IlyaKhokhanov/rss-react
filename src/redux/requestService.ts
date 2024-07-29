@@ -21,5 +21,3 @@ export const requestAPI = createApi({
     }),
   }),
 });
-
-export const { fetchAllItems, fetchOneItem } = requestAPI.endpoints;

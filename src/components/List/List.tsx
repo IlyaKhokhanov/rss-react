@@ -1,3 +1,5 @@
+'use client';
+
 import Card from '../Card/Card';
 import { useAppSelector } from '../../hooks';
 

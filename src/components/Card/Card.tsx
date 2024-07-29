@@ -1,8 +1,10 @@
+'use client';
+
 import { requestObj } from '../../types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
 import { deleteItem, setItem } from '../../redux/slices/selectedItems';
+import { useRouter } from 'next/navigation';
 
 type CardProps = {
   card: requestObj;
@@ -23,12 +25,8 @@ function Card({ card }: CardProps) {
     [selectedList, cardId],
   );
 
-  function checkHandler(
-    e?:
-      | React.MouseEvent<HTMLDivElement, MouseEvent>
-      | React.ChangeEvent<HTMLInputElement>,
-  ) {
-    if (e) e.stopPropagation();
+  function checkHandler(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    e.stopPropagation();
     if (isSelected) {
       dispatch(deleteItem(cardId));
     } else {
@@ -38,13 +36,9 @@ function Card({ card }: CardProps) {
 
   function clickHandler() {
     if (isActive) {
-      router.push({
-        pathname: '/page/' + currentPage,
-      });
+      router.push('/page/' + currentPage);
     } else {
-      router.push({
-        pathname: '/page/' + currentPage + '/details/' + cardId,
-      });
+      router.push('/page/' + currentPage + '/details/' + cardId);
     }
   }
 
@@ -71,7 +65,7 @@ function Card({ card }: CardProps) {
         <span>{card.hair_color}</span>
       </div>
       <div className="item-checkbox" onClick={checkHandler}>
-        <input type="checkbox" checked={isSelected} onChange={checkHandler} />
+        <input type="checkbox" checked={isSelected} onChange={checkboxClick} />
         {isSelected ? 'Cancel the selection' : 'Select item'}
       </div>
     </li>
@@ -79,3 +73,5 @@ function Card({ card }: CardProps) {
 }
 
 export default Card;
+
+function checkboxClick() {}

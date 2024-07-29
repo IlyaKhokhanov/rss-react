@@ -1,123 +1,62 @@
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '../../redux/store';
+import { mockList } from '../mock';
+import * as reduxHooks from '../../hooks';
 import Card from '../../components/Card/Card';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 
 describe('Card', () => {
   it('should card clicked', async () => {
-    vi.mock('react-router-dom', async () => {
-      return {
-        ...vi.importMock('react-router-dom'),
-        useHistory: vi.fn(),
-        useParams: vi.fn(),
-        useLocation: () => ({
-          search: '',
-          pathname: ' /page/1/ ',
-        }),
-        useNavigate: () => vi.fn(),
-        matchPath: vi.fn(),
-        withRouter: vi.fn(),
-        useRouteMatch: vi.fn(),
-        Link: ({ children, to }: { children: JSX.Element; to: string }) =>
-          React.createElement('a', { href: to }, children),
-        Router: () => vi.fn(),
-        HashRouter: () => vi.fn(),
-        Switch: () => vi.fn(),
-      };
+    vi.spyOn(reduxHooks, 'useAppSelector').mockReturnValue({
+      selectedList: [
+        { id: '1', url: '1/1/1/1', name: 'Fedya' },
+        { id: '2', url: '2/2/2/2', name: 'Fedya' },
+      ],
     });
 
-    const item = {
-      birth_year: '132',
-      created: new Date(),
-      edited: new Date(),
-      eye_color: 'red',
-      films: [],
-      gender: 'Male',
-      hair_color: 'brown',
-      height: '182',
-      homeworld: 'Earth',
-      mass: '64',
-      name: 'Ben',
-      skin_color: 'green',
-      species: [],
-      starships: [],
-      url: '2/2/2',
-      vehicles: [],
-    };
-
     render(
-      <Card
-        card={item}
-        currentElement="1"
-        setCurrentElement={(string) => string}
-      />,
+      <MemoryRouter>
+        <Provider store={store}>
+          <Card card={mockList.results[0]} />
+        </Provider>
+      </MemoryRouter>,
     );
 
-    const link = screen.getByRole('link');
-
-    expect(link).toBeInTheDocument();
+    const card = screen.getByText('Ben');
+    const checkbox = screen.getByRole('checkbox');
 
     const user = userEvent.setup();
-    await user.click(link);
+    await user.click(card);
+    await user.click(checkbox);
 
-    const name = screen.getByText('Ben');
-
-    expect(name).toBeInTheDocument();
-    expect(name).toHaveTextContent('Ben');
+    expect(checkbox).toBeChecked();
   });
 
-  it('should card acvtive', async () => {
-    vi.mock('react-router-dom', async () => {
-      return {
-        ...vi.importMock('react-router-dom'),
-        useHistory: vi.fn(),
-        useParams: vi.fn(),
-        useLocation: () => ({
-          search: '',
-          pathname: ' /page/1/ ',
-        }),
-        useNavigate: () => vi.fn(),
-        matchPath: vi.fn(),
-        withRouter: vi.fn(),
-        useRouteMatch: vi.fn(),
-        Link: ({ children, to }: { children: JSX.Element; to: string }) =>
-          React.createElement('a', { href: to }, children),
-        Router: () => vi.fn(),
-        HashRouter: () => vi.fn(),
-        Switch: () => vi.fn(),
-      };
+  it('should card clicked checkbox', async () => {
+    vi.spyOn(reduxHooks, 'useAppSelector').mockReturnValue({
+      selectedList: [
+        { id: '3', url: '3/3/3/3', name: 'Fedya' },
+        { id: '4', url: '4/4/4/4/4', name: 'Fedya' },
+      ],
     });
 
-    const item = {
-      birth_year: '132',
-      created: new Date(),
-      edited: new Date(),
-      eye_color: 'red',
-      films: [],
-      gender: 'Male',
-      hair_color: 'brown',
-      height: '182',
-      homeworld: 'Earth',
-      mass: '64',
-      name: 'Ben',
-      skin_color: 'green',
-      species: [],
-      starships: [],
-      url: '1/1/1',
-      vehicles: [],
-    };
-
     render(
-      <Card
-        card={item}
-        currentElement="1"
-        setCurrentElement={(string) => string}
-      />,
+      <MemoryRouter>
+        <Provider store={store}>
+          <Card card={mockList.results[0]} />
+        </Provider>
+      </MemoryRouter>,
     );
 
-    const name = screen.getByText('Ben');
+    const card = screen.getByText('Ben');
+    const checkbox = screen.getByRole('checkbox');
 
-    expect(name).toBeInTheDocument();
-    expect(name).toHaveTextContent('Ben');
+    const user = userEvent.setup();
+    await user.click(card);
+    await user.click(checkbox);
+
+    expect(checkbox).not.toBeChecked();
   });
 });

@@ -1,21 +1,24 @@
 import { render, screen } from '@testing-library/react';
-import Search from '../../components/Search/Search';
+import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '../../redux/store';
+import * as reduxHooks from '../../hooks';
 import userEvent from '@testing-library/user-event';
+import Search from '../../components/Search/Search';
 
 describe('Search', () => {
-  it('should render component', () => {
-    render(<Search searchHandler={(text) => text} />);
-
-    const input = screen.getByRole('textbox');
-    expect(input).toBeInTheDocument();
-
-    const button = screen.getByRole('button');
-    expect(button).toBeInTheDocument();
-    expect(button).toHaveTextContent('Search');
-  });
-
   it('should check input', async () => {
-    render(<Search searchHandler={(text) => text} />);
+    vi.spyOn(reduxHooks, 'useAppSelector').mockReturnValue({
+      searchString: '',
+    });
+
+    render(
+      <MemoryRouter>
+        <Provider store={store}>
+          <Search />
+        </Provider>
+      </MemoryRouter>,
+    );
 
     const input = screen.getByRole('textbox');
     const button = screen.getByRole('button');

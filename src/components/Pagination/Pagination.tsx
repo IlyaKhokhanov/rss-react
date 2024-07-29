@@ -1,22 +1,15 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setCurrentPage } from '../../redux/slices/application';
 import './Pagination.scss';
 
-type PaginationProps = {
-  totalCount: number;
-  itemsPerPage: number;
-  currentPage: number;
-};
-
-function Pagination({
-  totalCount,
-  itemsPerPage,
-  currentPage,
-}: PaginationProps) {
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
+function Pagination() {
+  const dispatch = useAppDispatch();
+  const { countElements, itemsPerPage, currentPage } = useAppSelector(
+    (state) => state.application,
+  );
 
   const numbersArr = [];
-  for (let i = 1; i <= Math.ceil(totalCount / itemsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(countElements / itemsPerPage); i++) {
     numbersArr.push(i);
   }
 
@@ -28,11 +21,7 @@ function Pagination({
           className={
             el === currentPage ? 'pagination-item-active' : 'pagination-item'
           }
-          onClick={() => {
-            const arr = pathname.split('/');
-            arr[2] = String(el);
-            navigate(arr.join('/'));
-          }}
+          onClick={() => dispatch(setCurrentPage(el))}
         >
           {el}
         </li>

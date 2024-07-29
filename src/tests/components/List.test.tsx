@@ -1,138 +1,45 @@
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '../../redux/store';
+import { mockList } from '../mock';
 import List from '../../components/List/List';
-import { IState } from '../../types';
-import React from 'react';
-
-type ListProps = {
-  data: IState;
-  setCurrentElement: (url: string) => void;
-};
+import * as reduxHooks from '../../hooks';
 
 describe('List', () => {
   it('should render empty list', () => {
-    const state: ListProps = {
-      data: {
-        currentElement: '1',
-        list: [],
-        searchString: '',
-        isLoading: false,
-        countElements: 10,
-        itemsPerPage: 10,
-        currentPage: 1,
-        hasError: false,
-      },
-      setCurrentElement(url) {
-        return url;
-      },
-    };
-
-    render(
-      <List data={state.data} setCurrentElement={state.setCurrentElement} />,
-    );
-
-    const elem = screen.getByText('List is empty');
-    expect(elem).toBeInTheDocument();
-    expect(elem).toHaveTextContent('List is empty');
-  });
-
-  it('should render some list', () => {
-    vi.mock('react-router-dom', async () => {
-      return {
-        ...vi.importMock('react-router-dom'),
-        useHistory: vi.fn(),
-        useParams: vi.fn(),
-        useLocation: () => ({
-          search: '',
-          pathname: '/',
-        }),
-        useNavigate: vi.fn(),
-        matchPath: vi.fn(),
-        withRouter: vi.fn(),
-        useRouteMatch: vi.fn(),
-        Link: ({ children, to }: { children: JSX.Element; to: string }) =>
-          React.createElement('a', { href: to }, children),
-        Router: () => vi.fn(),
-        HashRouter: () => vi.fn(),
-        Switch: () => vi.fn(),
-      };
+    vi.spyOn(reduxHooks, 'useAppSelector').mockReturnValue({
+      list: [],
     });
 
-    const state: ListProps = {
-      data: {
-        currentElement: '1',
-        list: [
-          {
-            birth_year: '132',
-            created: new Date(),
-            edited: new Date(),
-            eye_color: 'red',
-            films: [],
-            gender: 'Male',
-            hair_color: 'brown',
-            height: '182',
-            homeworld: 'Earth',
-            mass: '64',
-            name: 'Ben',
-            skin_color: 'green',
-            species: [],
-            starships: [],
-            url: '1/1/1',
-            vehicles: [],
-          },
-          {
-            birth_year: '132',
-            created: new Date(),
-            edited: new Date(),
-            eye_color: 'red',
-            films: [],
-            gender: 'Male',
-            hair_color: 'brown',
-            height: '182',
-            homeworld: 'Earth',
-            mass: '64',
-            name: 'Pasha',
-            skin_color: 'green',
-            species: [],
-            starships: [],
-            url: '2/2/2',
-            vehicles: [],
-          },
-          {
-            birth_year: '132',
-            created: new Date(),
-            edited: new Date(),
-            eye_color: 'red',
-            films: [],
-            gender: 'Male',
-            hair_color: 'brown',
-            height: '182',
-            homeworld: 'Earth',
-            mass: '64',
-            name: 'Pasha',
-            skin_color: 'green',
-            species: [],
-            starships: [],
-            url: '2/2/2',
-            vehicles: [],
-          },
-        ],
-        searchString: '',
-        isLoading: false,
-        countElements: 10,
-        itemsPerPage: 10,
-        currentPage: 1,
-        hasError: false,
-      },
-      setCurrentElement(url) {
-        return url;
-      },
-    };
-
     render(
-      <List data={state.data} setCurrentElement={state.setCurrentElement} />,
+      <MemoryRouter>
+        <Provider store={store}>
+          <List />
+        </Provider>
+      </MemoryRouter>,
     );
 
-    const elements = screen.getAllByRole('link');
-    expect(elements).toHaveLength(2);
+    const header = screen.getByText('List is empty');
+    expect(header).toHaveTextContent('List is empty');
+  });
+
+  it('should render list with elements', () => {
+    vi.spyOn(reduxHooks, 'useAppSelector').mockReturnValue({
+      list: mockList.results,
+      selectedList: [{ id: '2', url: '2/2/2/2', name: 'Fedya' }],
+    });
+
+    render(
+      <MemoryRouter>
+        <Provider store={store}>
+          <List />
+        </Provider>
+      </MemoryRouter>,
+    );
+
+    const listItems = screen.getAllByRole('listitem');
+
+    expect(listItems).toHaveLength(3);
   });
 });

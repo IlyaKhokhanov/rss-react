@@ -1,7 +1,12 @@
 .loader {
   justify-self: center;
-  width: 50%;
   padding-top: 100px;
   margin: 0 auto;
   font-size: 24px;
+}
+
+.dark-theme {
+  .loader {
+    color: #fff;
+  }
 }

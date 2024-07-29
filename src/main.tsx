@@ -1,25 +1,18 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import App from './App';
-import OpenCard from './components/OpenCard/OpenCard';
-import Error from './components/Error/Error';
-import NotFound from './components/NotFound/NotFound';
-import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary';
+import { store } from './redux/store';
 import './index.scss';
+import { ThemeProvider } from './context/ThemeProvider';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <ErrorBoundary fallback={<Error />}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Navigate to="/page/1" />} />
-          <Route path="/page/:page" element={<App />}>
-            <Route path="details/:id" element={<OpenCard />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </ErrorBoundary>
-  </React.StrictMode>,
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement,
+);
+
+root.render(
+  <Provider store={store}>
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
+  </Provider>,
 );

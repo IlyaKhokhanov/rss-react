@@ -1,41 +1,63 @@
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { request } from '../../api';
+import { useEffect, useMemo, useState } from 'react';
 import { requestObj } from '../../types';
 import Loader from '../Loader/Loader';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setCurrentElement } from '../../redux/slices/application';
+import { deleteItem, setItem } from '../../redux/slices/selectedItems';
+import { requestAPI } from '../../redux/requestService';
 import './OpenCard.scss';
 
-const URL = 'https://swapi.dev/api/people/';
-
 function OpenCard() {
+  const dispatch = useAppDispatch();
+  const { selectedList } = useAppSelector((state) => state.selectedItems);
+  const { currentElement } = useAppSelector((state) => state.application);
   const [openCard, setOpenCard] = useState<requestObj | null>(null);
-
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+  const isSelected = useMemo(
+    () => Boolean(selectedList.find((el) => el.id === currentElement)),
+    [selectedList, currentElement],
+  );
+  const queryItem = requestAPI.useFetchOneItemQuery(currentElement);
 
   useEffect(() => {
-    async function requestCard() {
-      setOpenCard(null);
-      request<requestObj>(URL + pathname.split('/')[4])
-        .then((data) => {
-          if (typeof data !== 'string') {
-            setOpenCard(data);
-          }
-        })
-        .catch((err) => console.error(err));
+    setIsLoading(queryItem.isLoading || queryItem.isFetching);
+    if (currentElement) {
+      if (queryItem.data) setOpenCard(queryItem.data);
     }
-    if (pathname.split('/')[4]) {
-      requestCard();
-    }
-  }, [pathname]);
+  }, [
+    currentElement,
+    queryItem.data,
+    queryItem.isFetching,
+    queryItem.isLoading,
+  ]);
 
+  function checkHandler(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    e.stopPropagation();
+    if (isSelected) {
+      dispatch(deleteItem(currentElement));
+    } else {
+      if (openCard) {
+        dispatch(
+          setItem({
+            id: currentElement,
+            url: openCard.url,
+            name: openCard.name,
+          }),
+        );
+      }
+    }
+  }
+
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <>
-      {openCard ? (
+      {openCard && (
         <div className="open-card">
           <button
             className="open-card-btn"
-            onClick={() => navigate(pathname.split('/').slice(0, 3).join('/'))}
+            onClick={() => dispatch(setCurrentElement(''))}
           >
             ✕
           </button>
@@ -76,12 +98,20 @@ function OpenCard() {
             <span className="open-card-desc">Color eye: </span>
             <span>{openCard.eye_color}</span>
           </div>
+          <div className="item-checkbox" onClick={checkHandler}>
+            <input
+              type="checkbox"
+              checked={isSelected}
+              onChange={checkboxClick}
+            />
+            {isSelected ? 'Cancel the selection' : 'Select item'}
+          </div>
         </div>
-      ) : (
-        <Loader />
       )}
     </>
   );
 }
 
 export default OpenCard;
+
+function checkboxClick() {}

@@ -4,7 +4,11 @@ import List from '../../../components/List/List';
 import Loader from '../../../components/Loader/Loader';
 import Pagination from '../../../components/Pagination/Pagination';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { requestAPI } from '../../../redux/requestService';
+import {
+  fetchAllItems,
+  fetchOneItem,
+  requestAPI,
+} from '../../../redux/requestService';
 import {
   setCountElements,
   setCurrentElement,
@@ -14,6 +18,7 @@ import {
   setLoading,
 } from '../../../redux/slices/application';
 import { useRouter } from 'next/router';
+import { wrapper } from '../../../redux/store';
 
 function Page({ children }: Readonly<{ children?: React.ReactNode }>) {
   const router = useRouter();
@@ -70,5 +75,27 @@ function Page({ children }: Readonly<{ children?: React.ReactNode }>) {
     </MainLayout>
   );
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async (context) => {
+    const { search = '', page = '1', details } = context.query;
+
+    let listData;
+    if (typeof search === 'string' && typeof page === 'string') {
+      listData = await store.dispatch(
+        fetchAllItems.initiate({ search: search, page: Number(page) }),
+      );
+    }
+
+    let listItem;
+    if (details && typeof details === 'string') {
+      listItem = await store.dispatch(fetchOneItem.initiate(details));
+    }
+
+    return {
+      props: { listData: listData?.data, itemData: listItem?.data || null },
+    };
+  },
+);
 
 export default Page;

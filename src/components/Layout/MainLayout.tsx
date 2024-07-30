@@ -5,10 +5,12 @@ import Search from '../Search/Search';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setError, setDarkTheme } from '../../redux/slices/application';
 import { useEffect } from 'react';
+import { useParams } from 'next/navigation';
 
 function MainLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const dispatch = useAppDispatch();
-  const { currentElement, isDarkTheme, hasError } = useAppSelector(
+  const { id } = useParams<{ id?: string }>();
+  const { isDarkTheme, hasError } = useAppSelector(
     (state) => state.application,
   );
 
@@ -35,7 +37,7 @@ function MainLayout({ children }: Readonly<{ children: React.ReactNode }>) {
       <Search />
       <div
         className="main"
-        style={{ gridTemplateColumns: currentElement ? '1.5fr 1fr' : '1fr' }}
+        style={{ gridTemplateColumns: id ? '1.5fr 1fr' : '1fr' }}
       >
         {children}
       </div>

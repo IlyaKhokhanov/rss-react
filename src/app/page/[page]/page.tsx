@@ -1,64 +1,35 @@
-'use client';
-
-import { useEffect } from 'react';
 import MainLayout from '../../../components/Layout/MainLayout';
 import List from '../../../components/List/List';
-import Loader from '../../../components/Loader/Loader';
 import Pagination from '../../../components/Pagination/Pagination';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { requestAPI } from '../../../redux/requestService';
-import {
-  setCountElements,
-  setCurrentElement,
-  setCurrentPage,
-  setError,
-  setList,
-  setLoading,
-} from '../../../redux/slices/application';
-import { useParams } from 'next/navigation';
+import { IRequestList } from '../../../types';
 
-function Page({ children }: Readonly<{ children?: React.ReactNode }>) {
-  const params = useParams<{ page: string; id?: string }>();
-  const dispatch = useAppDispatch();
-  const { currentPage, searchString, isLoading } = useAppSelector(
-    (state) => state.application,
+type pageType = {
+  params: { page: string; id: string };
+  searchParams: { search: string };
+  children?: React.ReactNode;
+};
+
+async function getServerSideProps(
+  page: string,
+  search: string,
+): Promise<IRequestList> {
+  const res = await fetch(
+    `https://swapi.dev/api/people/?page=${page}&search=${search ? search : ''}`,
   );
+  return res.json();
+}
 
-  const queryList = requestAPI.useFetchAllItemsQuery({
-    search: searchString,
-    page: currentPage || 1,
-  });
-
-  useEffect(() => {
-    dispatch(setCurrentPage(params.page ? +params.page : 1));
-    dispatch(setCurrentElement(params.id ? params.id : null));
-  }, [params, dispatch]);
-
-  useEffect(() => {
-    dispatch(setLoading(queryList.isLoading || queryList.isFetching));
-    if (queryList.data) {
-      dispatch(setList(queryList.data.results));
-      dispatch(setCountElements(queryList.data.count));
-    } else if (queryList.error) dispatch(setError(true));
-  }, [
-    queryList.data,
-    queryList.isFetching,
-    queryList.isLoading,
-    queryList.error,
-    dispatch,
-  ]);
+async function Page({ params, searchParams, children }: Readonly<pageType>) {
+  const listData = await getServerSideProps(params.page, searchParams.search);
 
   return (
     <MainLayout>
       <div className="block-left">
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <>
-            <List />
-            <Pagination />
-          </>
-        )}
+        <List
+          list={listData.results ? listData.results : null}
+          openId={params.id}
+        />
+        <Pagination />
       </div>
       {children && children}
     </MainLayout>

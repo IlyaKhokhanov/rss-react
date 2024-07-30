@@ -8,18 +8,17 @@ import { useRouter } from 'next/navigation';
 
 type CardProps = {
   card: requestObj;
+  openId: string;
 };
 
-function Card({ card }: CardProps) {
+function Card({ card, openId }: CardProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { currentElement, currentPage } = useAppSelector(
-    (state) => state.application,
-  );
+  const { currentPage } = useAppSelector((state) => state.application);
   const { selectedList } = useAppSelector((state) => state.selectedItems);
 
   const cardId = card.url.split('/')[card.url.split('/').length - 2];
-  const isActive = currentElement === cardId;
+  const isActive = openId === cardId;
   const isSelected = useMemo(
     () => Boolean(selectedList.find((el) => el.id === cardId)),
     [selectedList, cardId],

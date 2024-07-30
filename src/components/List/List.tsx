@@ -1,17 +1,13 @@
-'use client';
-
+import { requestObj } from '../../types';
 import Card from '../Card/Card';
-import { useAppSelector } from '../../hooks';
 
-function List() {
-  const { list } = useAppSelector((state) => state.application);
-
+function List({ list, openId }: { list: requestObj[] | null; openId: string }) {
   return (
     <>
       {list && list.length ? (
         <ul className="list">
           {list.map((el, indx) => (
-            <Card key={indx} card={el} />
+            <Card key={indx} card={el} openId={openId} />
           ))}
         </ul>
       ) : (

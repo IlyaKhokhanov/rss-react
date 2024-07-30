@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector, useLocalStorage } from '../../hooks';
 import { setSearchString } from '../../redux/slices/application';

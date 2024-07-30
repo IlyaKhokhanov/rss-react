@@ -5,7 +5,7 @@ const initialState: IState = {
   currentPage: null,
   searchString: '',
   list: [],
-  isLoading: true,
+  isLoading: false,
   countElements: 0,
   itemsPerPage: 10,
   currentElement: '',

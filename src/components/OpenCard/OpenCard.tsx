@@ -1,49 +1,34 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { requestObj } from '../../types';
-import Loader from '../Loader/Loader';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { deleteItem, setItem } from '../../redux/slices/selectedItems';
-import { requestAPI } from '../../redux/requestService';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
-function OpenCard() {
-  const router = useRouter();
+type OpenCardType = {
+  openCard: requestObj;
+  page: string;
+  id: string;
+};
+
+function OpenCard({ openCard, page, id }: OpenCardType) {
   const dispatch = useAppDispatch();
   const { selectedList } = useAppSelector((state) => state.selectedItems);
-  const { currentElement, currentPage } = useAppSelector(
-    (state) => state.application,
-  );
-  const [openCard, setOpenCard] = useState<requestObj | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const isSelected = useMemo(
-    () => Boolean(selectedList.find((el) => el.id === currentElement)),
-    [selectedList, currentElement],
+    () => Boolean(selectedList.find((el) => el.id === id)),
+    [selectedList, id],
   );
-  const queryItem = requestAPI.useFetchOneItemQuery(currentElement);
-
-  useEffect(() => {
-    setIsLoading(queryItem.isLoading || queryItem.isFetching);
-    if (currentElement) {
-      if (queryItem.data) setOpenCard(queryItem.data);
-    }
-  }, [
-    currentElement,
-    queryItem.data,
-    queryItem.isFetching,
-    queryItem.isLoading,
-  ]);
 
   function checkHandler(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     e.stopPropagation();
     if (isSelected) {
-      dispatch(deleteItem(currentElement));
+      dispatch(deleteItem(id));
     } else {
       if (openCard) {
         dispatch(
           setItem({
-            id: currentElement,
+            id: id,
             url: openCard.url,
             name: openCard.name,
           }),
@@ -52,21 +37,13 @@ function OpenCard() {
     }
   }
 
-  if (isLoading) {
-    return <Loader />;
-  }
   return (
     <>
       {openCard && (
         <div className="open-card">
-          <button
-            className="open-card-btn"
-            onClick={() => {
-              router.push('/page/' + currentPage);
-            }}
-          >
+          <Link className="open-card-btn" href={`/page/${page}`}>
             ✕
-          </button>
+          </Link>
           <h2 className="open-card-header">{openCard.name}</h2>
           <div>
             <span className="open-card-desc">Gender: </span>

@@ -6,7 +6,7 @@ import Loader from '../Loader/Loader';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { deleteItem, setItem } from '../../redux/slices/selectedItems';
 import { requestAPI } from '../../redux/requestService';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 function OpenCard() {
   const router = useRouter();
@@ -62,9 +62,7 @@ function OpenCard() {
           <button
             className="open-card-btn"
             onClick={() => {
-              router.push({
-                pathname: '/page/' + currentPage,
-              });
+              router.push('/page/' + currentPage);
             }}
           >
             ✕

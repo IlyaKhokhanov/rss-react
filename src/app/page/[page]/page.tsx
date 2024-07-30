@@ -18,9 +18,9 @@ import {
 import { useParams } from 'next/navigation';
 
 function Page({ children }: Readonly<{ children?: React.ReactNode }>) {
-  const params = useParams();
+  const params = useParams<{ page: string; id?: string }>();
   const dispatch = useAppDispatch();
-  const { currentPage, searchString, hasError, isLoading } = useAppSelector(
+  const { currentPage, searchString, isLoading } = useAppSelector(
     (state) => state.application,
   );
 
@@ -30,8 +30,8 @@ function Page({ children }: Readonly<{ children?: React.ReactNode }>) {
   });
 
   useEffect(() => {
-    dispatch(setCurrentPage(params['page'] ? +params['page'] : 1));
-    dispatch(setCurrentElement(params['id'] ? params['id'] : null));
+    dispatch(setCurrentPage(params.page ? +params.page : 1));
+    dispatch(setCurrentElement(params.id ? params.id : null));
   }, [params, dispatch]);
 
   useEffect(() => {
@@ -47,14 +47,6 @@ function Page({ children }: Readonly<{ children?: React.ReactNode }>) {
     queryList.error,
     dispatch,
   ]);
-
-  useEffect(() => {
-    function addError() {
-      if (hasError) throw new Error('Error');
-    }
-    addError();
-  }, [hasError]);
-
 
   return (
     <MainLayout>

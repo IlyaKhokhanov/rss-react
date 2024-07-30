@@ -17,7 +17,7 @@ async function Details({ params, searchParams }: Readonly<detailsType>) {
 
   return (
     <Page params={params} searchParams={searchParams}>
-      <OpenCard openCard={cardData} id={params.id} page={params.page} />
+      <OpenCard openCard={cardData} id={params.id} page={params.page} search={searchParams.search} />
     </Page>
   );
 }

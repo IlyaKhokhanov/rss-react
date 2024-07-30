@@ -1,15 +1,16 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector, useLocalStorage } from '../../hooks';
-import { setSearchString } from '../../redux/slices/application';
+import { useLocalStorage } from '../../hooks';
 import { useRouter } from 'next/navigation';
 
-function Search() {
-  const dispatch = useAppDispatch();
-  const { searchString, currentElement } = useAppSelector(
-    (state) => state.application,
-  );
+function Search({
+  page,
+  currentId,
+}: {
+  page: string;
+  currentId: string | null;
+}) {
   const [state, setValue] = useLocalStorage('searchString', '');
   const router = useRouter();
 
@@ -18,24 +19,22 @@ function Search() {
   }
 
   useEffect(() => {
-    dispatch(setSearchString(state));
-    if (state) router.push('/page/' + 1);
+    router.push(
+      `/page/${page}${currentId ? '/details/' + currentId : ''}${state ? `?search=${state}` : ''}`,
+    );
   }, []);
 
   function clickHandler() {
-    if (currentElement) {
-      router.push('/page/' + 1 + '/details/' + currentElement);
-    } else {
-      router.push('/page/' + 1);
-    }
-    dispatch(setSearchString(state));
+    router.push(
+      `/page/1${currentId ? '/details/' + currentId : ''}${state ? `?search=${state}` : ''}`,
+    );
   }
 
   return (
     <div className="search">
       <input
         className="search-input"
-        defaultValue={searchString}
+        defaultValue={state}
         type="text"
         onChange={inputChange}
       />

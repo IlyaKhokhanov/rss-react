@@ -1,25 +1,31 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useAppSelector } from '../../hooks';
 
-function Pagination() {
+type PaginationType = {
+  countElements: number;
+  currentPage: string;
+  currentElement: string;
+  search: string;
+};
+
+function Pagination({
+  countElements,
+  currentPage,
+  currentElement,
+  search,
+}: PaginationType) {
   const router = useRouter();
 
-  const { countElements, itemsPerPage, currentPage, currentElement } =
-    useAppSelector((state) => state.application);
-
   const numbersArr = [];
-  for (let i = 1; i <= Math.ceil(countElements / itemsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(countElements / 10); i++) {
     numbersArr.push(i);
   }
 
   function clickHandler(el: number) {
-    if (currentElement) {
-      router.push('/page/' + el + '/details/' + currentElement);
-    } else {
-      router.push('/page/' + el);
-    }
+    router.push(
+      `/page/${el}${currentElement ? '/details/' + currentElement : ''}${search ? `?search=${search}` : ''}`,
+    );
   }
 
   return (
@@ -28,7 +34,7 @@ function Pagination() {
         <li
           key={el}
           className={
-            el === currentPage ? 'pagination-item-active' : 'pagination-item'
+            el === +currentPage ? 'pagination-item-active' : 'pagination-item'
           }
           onClick={() => clickHandler(el)}
         >

@@ -20,13 +20,6 @@ type requestObj = {
 };
 
 interface IState {
-  currentPage: number | null;
-  searchString: string;
-  list: requestObj[];
-  isLoading: boolean;
-  countElements: number;
-  itemsPerPage: number;
-  currentElement: string;
   hasError: boolean;
   isDarkTheme: boolean;
 }

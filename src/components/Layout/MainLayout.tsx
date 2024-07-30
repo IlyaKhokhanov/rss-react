@@ -9,7 +9,7 @@ import { useParams } from 'next/navigation';
 
 function MainLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const dispatch = useAppDispatch();
-  const { id } = useParams<{ id?: string }>();
+  const { page, id } = useParams<{ id?: string; page: string }>();
   const { isDarkTheme, hasError } = useAppSelector(
     (state) => state.application,
   );
@@ -34,7 +34,7 @@ function MainLayout({ children }: Readonly<{ children: React.ReactNode }>) {
           {isDarkTheme ? 'Turn on a light theme' : 'Turn on the dark theme'}
         </button>
       </div>
-      <Search />
+      <Search page={page} currentId={id ? id : null} />
       <div
         className="main"
         style={{ gridTemplateColumns: id ? '1.5fr 1fr' : '1fr' }}

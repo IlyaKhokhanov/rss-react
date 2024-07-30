@@ -9,12 +9,13 @@ import { useRouter } from 'next/navigation';
 type CardProps = {
   card: requestObj;
   openId: string;
+  page: string;
+  search: string;
 };
 
-function Card({ card, openId }: CardProps) {
+function Card({ card, openId, page, search }: CardProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { currentPage } = useAppSelector((state) => state.application);
   const { selectedList } = useAppSelector((state) => state.selectedItems);
 
   const cardId = card.url.split('/')[card.url.split('/').length - 2];
@@ -34,11 +35,9 @@ function Card({ card, openId }: CardProps) {
   }
 
   function clickHandler() {
-    if (isActive) {
-      router.push('/page/' + currentPage);
-    } else {
-      router.push('/page/' + currentPage + '/details/' + cardId);
-    }
+    router.push(
+      `/page/${page}${cardId ? '/details/' + cardId : ''}${search ? `?search=${search}` : ''}`,
+    );
   }
 
   return (

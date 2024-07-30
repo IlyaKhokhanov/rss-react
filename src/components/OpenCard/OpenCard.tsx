@@ -10,9 +10,10 @@ type OpenCardType = {
   openCard: requestObj;
   page: string;
   id: string;
+  search: string;
 };
 
-function OpenCard({ openCard, page, id }: OpenCardType) {
+function OpenCard({ openCard, page, id, search }: OpenCardType) {
   const dispatch = useAppDispatch();
   const { selectedList } = useAppSelector((state) => state.selectedItems);
   const isSelected = useMemo(
@@ -41,7 +42,10 @@ function OpenCard({ openCard, page, id }: OpenCardType) {
     <>
       {openCard && (
         <div className="open-card">
-          <Link className="open-card-btn" href={`/page/${page}`}>
+          <Link
+            className="open-card-btn"
+            href={`/page/${page}${search ? `?search=${search}` : ''}`}
+          >
             ✕
           </Link>
           <h2 className="open-card-header">{openCard.name}</h2>

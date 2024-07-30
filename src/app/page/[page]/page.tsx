@@ -28,8 +28,15 @@ async function Page({ params, searchParams, children }: Readonly<pageType>) {
         <List
           list={listData.results ? listData.results : null}
           openId={params.id}
+          page={params.page}
+          search={searchParams.search}
         />
-        <Pagination />
+        <Pagination
+          countElements={listData.count}
+          currentPage={params.page}
+          currentElement={params.id}
+          search={searchParams.search}
+        />
       </div>
       {children && children}
     </MainLayout>

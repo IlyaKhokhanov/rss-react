@@ -13,7 +13,7 @@ describe('List', () => {
 
     render(
       <Provider store={store}>
-        <List />
+        <List list={[]} page="1" openId="1" search="" />
       </Provider>,
     );
 
@@ -22,9 +22,9 @@ describe('List', () => {
   });
 
   it('should render list with elements', () => {
-    vi.mock('next/router', async () => {
+    vi.mock('next/navigation', async () => {
       return {
-        ...vi.importMock('next/router'),
+        ...vi.importMock('next/navigation'),
         useRouter: () => ({
           push: vi.fn(),
         }),
@@ -38,7 +38,7 @@ describe('List', () => {
 
     render(
       <Provider store={store}>
-        <List />
+        <List list={mockList.results} page="1" openId="1" search="" />
       </Provider>,
     );
 

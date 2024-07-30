@@ -14,10 +14,14 @@ async function getServerSideProps(id: string): Promise<requestObj> {
 
 async function Details({ params, searchParams }: Readonly<detailsType>) {
   const cardData = await getServerSideProps(params.id);
-
   return (
     <Page params={params} searchParams={searchParams}>
-      <OpenCard openCard={cardData} id={params.id} page={params.page} search={searchParams.search} />
+      <OpenCard
+        openCard={cardData}
+        id={params.id}
+        page={params.page}
+        search={searchParams.search}
+      />
     </Page>
   );
 }

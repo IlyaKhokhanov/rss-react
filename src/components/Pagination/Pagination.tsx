@@ -1,5 +1,6 @@
 'use client';
 
+import styles from './Pagination.module.scss';
 import { useRouter } from 'next/navigation';
 
 type PaginationType = {
@@ -29,13 +30,11 @@ function Pagination({
   }
 
   return (
-    <ul className="pagination">
+    <ul className={styles.pagination}>
       {numbersArr.map((el) => (
         <li
           key={el}
-          className={
-            el === +currentPage ? 'pagination-item-active' : 'pagination-item'
-          }
+          className={el === +currentPage ? styles.active : styles.item}
           onClick={() => clickHandler(el)}
         >
           {el}

@@ -1,5 +1,6 @@
 'use client';
 
+import styles from './Search.module.scss';
 import React, { useEffect } from 'react';
 import { useLocalStorage } from '../../hooks';
 import { useRouter } from 'next/navigation';
@@ -31,14 +32,14 @@ function Search({
   }
 
   return (
-    <div className="search">
+    <div className={styles.search}>
       <input
-        className="search-input"
+        className={styles.input}
         defaultValue={state}
         type="text"
         onChange={inputChange}
       />
-      <button className="search-btn" onClick={clickHandler}>
+      <button className={styles.btn} onClick={clickHandler}>
         Search
       </button>
     </div>

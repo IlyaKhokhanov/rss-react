@@ -1,5 +1,6 @@
 import { requestObj } from '../../types';
 import Card from '../Card/Card';
+import styles from './List.module.scss';
 
 type ListType = {
   list: requestObj[] | null;
@@ -12,7 +13,7 @@ function List({ list, openId, page, search }: ListType) {
   return (
     <>
       {list && list.length ? (
-        <ul className="list">
+        <ul className={styles.list}>
           {list.map((el, indx) => (
             <Card
               key={indx}
@@ -24,7 +25,7 @@ function List({ list, openId, page, search }: ListType) {
           ))}
         </ul>
       ) : (
-        <div className="empty">List is empty</div>
+        <div className={styles.empty}>List is empty</div>
       )}
     </>
   );

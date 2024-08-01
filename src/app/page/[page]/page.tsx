@@ -19,9 +19,8 @@ async function getServerSideProps(
   return res.json();
 }
 
-async function Page({ params, searchParams, children }: Readonly<pageType>) {
+async function Page({ params, searchParams, children }: pageType) {
   const listData = await getServerSideProps(params.page, searchParams.search);
-
   return (
     <MainLayout>
       <div className="block-left">

@@ -5,6 +5,7 @@ import { requestObj } from '../../types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { deleteItem, setItem } from '../../redux/slices/selectedItems';
 import Link from 'next/link';
+import styles from './OpenCard.module.scss';
 
 type OpenCardType = {
   openCard: requestObj;
@@ -41,51 +42,51 @@ function OpenCard({ openCard, page, id, search }: OpenCardType) {
   return (
     <>
       {openCard && (
-        <div className="open-card">
+        <div className={styles.card}>
           <Link
-            className="open-card-btn"
+            className={styles.btn}
             href={`/page/${page}${search ? `?search=${search}` : ''}`}
           >
             ✕
           </Link>
-          <h2 className="open-card-header">{openCard.name}</h2>
+          <h2 className={styles.header}>{openCard.name}</h2>
           <div>
-            <span className="open-card-desc">Gender: </span>
+            <span className={styles.desc}>Gender: </span>
             <span>{openCard.gender}</span>
           </div>
           <div>
-            <span className="open-card-desc">Birthday: </span>
+            <span className={styles.desc}>Birthday: </span>
             <span>{openCard.birth_year}</span>
           </div>
           <div>
-            <span className="open-card-desc">Created: </span>
+            <span className={styles.desc}>Created: </span>
             <span>{new Date(openCard.created).toLocaleString()}</span>
           </div>
           <div>
-            <span className="open-card-desc">Edited: </span>
+            <span className={styles.desc}>Edited: </span>
             <span>{new Date(openCard.edited).toLocaleString()}</span>
           </div>
           <div>
-            <span className="open-card-desc">Height: </span>
+            <span className={styles.desc}>Height: </span>
             <span>{openCard.height}</span>
           </div>
           <div>
-            <span className="open-card-desc">Weight: </span>
+            <span className={styles.desc}>Weight: </span>
             <span>{openCard.mass}</span>
           </div>
           <div>
-            <span className="open-card-desc">Color skin: </span>
+            <span className={styles.desc}>Color skin: </span>
             <span>{openCard.skin_color}</span>
           </div>
           <div>
-            <span className="open-card-desc">Color hair: </span>
+            <span className={styles.desc}>Color hair: </span>
             <span>{openCard.hair_color}</span>
           </div>
           <div>
-            <span className="open-card-desc">Color eye: </span>
+            <span className={styles.desc}>Color eye: </span>
             <span>{openCard.eye_color}</span>
           </div>
-          <div className="item-checkbox" onClick={checkHandler}>
+          <div className={styles.checkbox} onClick={checkHandler}>
             <input
               type="checkbox"
               checked={isSelected}

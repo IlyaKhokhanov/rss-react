@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useMemo } from 'react';
 import { deleteItem, setItem } from '../../redux/slices/selectedItems';
 import { useRouter } from 'next/navigation';
+import styles from './Card.module.scss';
 
 type CardProps = {
   card: requestObj;
@@ -36,33 +37,33 @@ function Card({ card, openId, page, search }: CardProps) {
 
   function clickHandler() {
     router.push(
-      `/page/${page}${cardId ? '/details/' + cardId : ''}${search ? `?search=${search}` : ''}`,
+      `/page/${page}${!isActive ? '/details/' + cardId : ''}${search ? `?search=${search}` : ''}`,
     );
   }
 
   return (
     <li
-      className={isActive ? 'list-item-active' : 'list-item'}
+      className={isActive ? styles.active : styles.item}
       onClick={clickHandler}
     >
-      <h3 className="list-item-header">{card.name}</h3>
+      <h3 className={styles.header}>{card.name}</h3>
       <div>
-        <span className="list-item-desc">Height: </span>
+        <span className={styles.desc}>Height: </span>
         <span>{card.height}</span>
       </div>
       <div>
-        <span className="list-item-desc">Weight: </span>
+        <span className={styles.desc}>Weight: </span>
         <span>{card.mass}</span>
       </div>
       <div>
-        <span className="list-item-desc">Color skin: </span>
+        <span className={styles.desc}>Color skin: </span>
         <span>{card.skin_color}</span>
       </div>
       <div>
-        <span className="list-item-desc">Color hair: </span>
+        <span className={styles.desc}>Color hair: </span>
         <span>{card.hair_color}</span>
       </div>
-      <div className="item-checkbox" onClick={checkHandler}>
+      <div className={styles.checkbox} onClick={checkHandler}>
         <input type="checkbox" checked={isSelected} onChange={checkboxClick} />
         {isSelected ? 'Cancel the selection' : 'Select item'}
       </div>

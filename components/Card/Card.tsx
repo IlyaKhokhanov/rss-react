@@ -1,11 +1,9 @@
-'use client';
-
 import { requestObj } from '../../types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useMemo } from 'react';
 import { deleteItem, setItem } from '../../redux/slices/selectedItems';
 import styles from './Card.module.scss';
-import { redirect } from '@remix-run/react';
+import { Link } from '@remix-run/react';
 
 type CardProps = {
   card: requestObj;
@@ -34,16 +32,10 @@ function Card({ card, openId, page, search }: CardProps) {
     }
   }
 
-  function clickHandler() {
-    redirect(
-      `/page/${page}${!isActive ? '/details/' + cardId : ''}${search ? `?search=${search}` : ''}`,
-    );
-  }
-
   return (
-    <li
+    <Link
       className={isActive ? styles.active : styles.item}
-      onClick={clickHandler}
+      to={`/page/${page}${!isActive ? '/details/' + cardId : ''}${search ? `?search=${search}` : ''}`}
     >
       <h3 className={styles.header}>{card.name}</h3>
       <div>
@@ -66,7 +58,7 @@ function Card({ card, openId, page, search }: CardProps) {
         <input type="checkbox" checked={isSelected} onChange={checkboxClick} />
         {isSelected ? 'Cancel the selection' : 'Select item'}
       </div>
-    </li>
+    </Link>
   );
 }
 

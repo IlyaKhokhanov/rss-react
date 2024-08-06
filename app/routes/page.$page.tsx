@@ -6,24 +6,23 @@ import Pagination from '../../components/Pagination/Pagination';
 
 type pageType = {
   params: { page: string; id: string };
-  searchParams: { search: string };
+  request: { url: string };
   children?: React.ReactNode;
 };
 
-export async function loader({ params }: pageType) {
-  const res = await fetch(
-    `https://swapi.dev/api/people/?page=${params.page}&search=`,
-  );
+export async function loader({ params, request }: pageType) {
+  const url = new URL(request.url);
+  const search = url.searchParams.get('search');
 
-  // const res = await fetch(
-  //   `https://swapi.dev/api/people/?page=${params.page}&search=${searchParams.search ? searchParams.search : ''}`,
-  // );
+  const res = await fetch(
+    `https://swapi.dev/api/people/?page=${params.page}&search=${search || ''}`,
+  );
   const listData = await res.json();
   return json({
     listData,
     page: params.page,
     id: params.id || '',
-    search: '',
+    search: search || '',
   });
 }
 

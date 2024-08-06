@@ -4,8 +4,8 @@ import { requestObj } from '../../types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useMemo } from 'react';
 import { deleteItem, setItem } from '../../redux/slices/selectedItems';
-import { useRouter } from 'next/navigation';
 import styles from './Card.module.scss';
+import { redirect } from '@remix-run/react';
 
 type CardProps = {
   card: requestObj;
@@ -15,7 +15,6 @@ type CardProps = {
 };
 
 function Card({ card, openId, page, search }: CardProps) {
-  const router = useRouter();
   const dispatch = useAppDispatch();
   const { selectedList } = useAppSelector((state) => state.selectedItems);
 
@@ -36,7 +35,7 @@ function Card({ card, openId, page, search }: CardProps) {
   }
 
   function clickHandler() {
-    router.push(
+    redirect(
       `/page/${page}${!isActive ? '/details/' + cardId : ''}${search ? `?search=${search}` : ''}`,
     );
   }

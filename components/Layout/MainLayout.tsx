@@ -1,16 +1,14 @@
-'use client';
-
 import FlyoutElement from '../FlyoutElement/FlyoutElement';
 import Search from '../Search/Search';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setError, setDarkTheme } from '../../redux/slices/application';
 import { useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams } from '@remix-run/react';
 import styles from './MainLayout.module.scss';
 
 function MainLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const dispatch = useAppDispatch();
-  const { page, id } = useParams<{ id?: string; page: string }>();
+  const { page, id } = useParams<{ page: string; id?: string }>();
   const { isDarkTheme, hasError } = useAppSelector(
     (state) => state.application,
   );
@@ -42,7 +40,7 @@ function MainLayout({ children }: Readonly<{ children: React.ReactNode }>) {
           {isDarkTheme ? 'Turn on a light theme' : 'Turn on the dark theme'}
         </button>
       </div>
-      <Search page={page} currentId={id ? id : null} />
+      <Search page={page || '1'} currentId={id ? id : null} />
       <div
         className={styles.main}
         style={{ gridTemplateColumns: id ? '1.5fr 1fr' : '1fr' }}

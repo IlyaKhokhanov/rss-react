@@ -4,9 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "remix vite:dev",
+    "build": "remix vite:build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
@@ -27,12 +26,17 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.6",
-    "next": "^14.2.5",
+    "@remix-run/node": "^2.11.0",
+    "@remix-run/react": "^2.11.0",
+    "@remix-run/serve": "^2.11.0",
+    "isbot": "^4.4.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-redux": "^9.1.2"
+    "react-redux": "^9.1.2",
+    "remix": "^2.11.0"
   },
   "devDependencies": {
+    "@remix-run/dev": "^2.11.0",
     "@testing-library/dom": "^10.3.1",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/react": "^16.0.0",
@@ -47,7 +51,6 @@
     "eslint": "^8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^18.0.0",
-    "eslint-config-next": "^14.2.5",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.29.1",
@@ -60,11 +63,11 @@
     "husky": "^9.0.11",
     "jsdom": "^24.1.0",
     "lint-staged": "^15.2.7",
-    "next-redux-wrapper": "^8.1.0",
     "prettier": "^3.3.2",
     "redux-mock-store": "^1.5.4",
     "sass": "^1.77.6",
     "typescript": "^5.2.2",
+    "vite": "^5.3.5",
     "vitest": "^2.0.4",
     "vitest-fetch-mock": "^0.3.0",
     "whatwg-fetch": "^3.6.20"

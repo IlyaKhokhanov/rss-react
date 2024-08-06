@@ -4,8 +4,8 @@ import { useMemo } from 'react';
 import { requestObj } from '../../types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { deleteItem, setItem } from '../../redux/slices/selectedItems';
-import Link from 'next/link';
 import styles from './OpenCard.module.scss';
+import { Link } from '@remix-run/react';
 
 type OpenCardType = {
   openCard: requestObj;
@@ -45,7 +45,7 @@ function OpenCard({ openCard, page, id, search }: OpenCardType) {
         <div className={styles.card}>
           <Link
             className={styles.btn}
-            href={`/page/${page}${search ? `?search=${search}` : ''}`}
+            to={`/page/${page}${search ? `?search=${search}` : ''}`}
           >
             ✕
           </Link>

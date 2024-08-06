@@ -1,9 +1,7 @@
-'use client';
-
 import styles from './Search.module.scss';
 import React, { useEffect } from 'react';
 import { useLocalStorage } from '../../hooks';
-import { useRouter } from 'next/navigation';
+import { redirect } from '@remix-run/react';
 
 function Search({
   page,
@@ -13,20 +11,19 @@ function Search({
   currentId: string | null;
 }) {
   const [state, setValue] = useLocalStorage('searchString', '');
-  const router = useRouter();
 
   function inputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setValue(e.target.value);
   }
 
   useEffect(() => {
-    router.push(
+    redirect(
       `/page/${page}${currentId ? '/details/' + currentId : ''}${state ? `?search=${state}` : ''}`,
     );
   }, []);
 
   function clickHandler() {
-    router.push(
+    redirect(
       `/page/1${currentId ? '/details/' + currentId : ''}${state ? `?search=${state}` : ''}`,
     );
   }

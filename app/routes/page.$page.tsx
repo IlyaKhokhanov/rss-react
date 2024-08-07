@@ -1,14 +1,22 @@
-import { useLoaderData } from '@remix-run/react';
+import { Outlet, useLoaderData } from '@remix-run/react';
 import { json } from '@remix-run/node';
 import MainLayout from '../../components/Layout/MainLayout';
 import List from '../../components/List/List';
 import Pagination from '../../components/Pagination/Pagination';
+// import { IRequestList } from '../../types';
 
 type pageType = {
   params: { page: string; id: string };
   request: { url: string };
   children?: React.ReactNode;
 };
+
+// type responsePage = {
+//   listData: IRequestList | null;
+//   page: string;
+//   id: string;
+//   search: string;
+// }; : Promise<TypedResponse<responsePage>>
 
 export async function loader({ params, request }: pageType) {
   const url = new URL(request.url);
@@ -44,7 +52,7 @@ function Page() {
           search={search}
         />
       </div>
-      {/* {children && children} */}
+      <Outlet />
     </MainLayout>
   );
 }

@@ -1,26 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useLocalStorage } from '../../hooks';
-import { Link, redirect } from '@remix-run/react';
+import { Link } from '@remix-run/react';
 import styles from './Search.module.scss';
 
-function Search({
-  page,
-  currentId,
-}: {
-  page: string;
-  currentId: string | null;
-}) {
+function Search({ currentId }: { currentId: string | null }) {
   const [state, setValue] = useLocalStorage('searchString', '');
 
   function inputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setValue(e.target.value);
   }
-
-  useEffect(() => {
-    redirect(
-      `/page/${page}${currentId ? '/details/' + currentId : ''}${state ? `?search=${state}` : ''}`,
-    );
-  }, []);
 
   return (
     <div className={styles.search}>
@@ -32,7 +20,7 @@ function Search({
       />
       <Link
         className={styles.btn}
-        to={`/page/1${currentId ? '/details/' + currentId : ''}${state ? `?search=${state}` : ''}`}
+        to={`/page/1${currentId ? '/details/' + currentId : ''}${Boolean(state) ? `?search=${state}` : ''}`}
       >
         Search
       </Link>

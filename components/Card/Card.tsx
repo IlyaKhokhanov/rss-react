@@ -33,32 +33,33 @@ function Card({ card, openId, page, search }: CardProps) {
   }
 
   return (
-    <Link
-      className={isActive ? styles.active : styles.item}
-      to={`/page/${page}${!isActive ? '/details/' + cardId : ''}${search ? `?search=${search}` : ''}`}
-    >
-      <h3 className={styles.header}>{card.name}</h3>
-      <div>
-        <span className={styles.desc}>Height: </span>
-        <span>{card.height}</span>
-      </div>
-      <div>
-        <span className={styles.desc}>Weight: </span>
-        <span>{card.mass}</span>
-      </div>
-      <div>
-        <span className={styles.desc}>Color skin: </span>
-        <span>{card.skin_color}</span>
-      </div>
-      <div>
-        <span className={styles.desc}>Color hair: </span>
-        <span>{card.hair_color}</span>
-      </div>
+    <li className={isActive ? styles.active : styles.item}>
+      <Link
+        to={`/page/${page}${!isActive ? '/details/' + cardId : ''}${search ? `?search=${search}` : ''}`}
+      >
+        <h3 className={styles.header}>{card.name}</h3>
+        <div>
+          <span className={styles.desc}>Height: </span>
+          <span>{card.height}</span>
+        </div>
+        <div>
+          <span className={styles.desc}>Weight: </span>
+          <span>{card.mass}</span>
+        </div>
+        <div>
+          <span className={styles.desc}>Color skin: </span>
+          <span>{card.skin_color}</span>
+        </div>
+        <div>
+          <span className={styles.desc}>Color hair: </span>
+          <span>{card.hair_color}</span>
+        </div>
+      </Link>
       <div className={styles.checkbox} onClick={checkHandler}>
         <input type="checkbox" checked={isSelected} onChange={checkboxClick} />
         {isSelected ? 'Cancel the selection' : 'Select item'}
       </div>
-    </Link>
+    </li>
   );
 }
 

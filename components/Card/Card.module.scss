@@ -13,6 +13,10 @@
   div {
     text-align: center;
   }
+
+  a {
+    color: #000;
+  }
 }
 
 .header {
@@ -48,12 +52,20 @@
     background: #33383d;
     color: #fff;
     box-shadow: none;
+
+    a {
+      color: #fff;
+    }
   }
 
   .active {
     background: #1f1f1f;
     color: #fff;
     box-shadow: none;
+
+    a {
+      color: #fff;
+    }
   }
 
   .header {

@@ -8,7 +8,7 @@ import styles from './MainLayout.module.scss';
 
 function MainLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const dispatch = useAppDispatch();
-  const { page, id } = useParams<{ page: string; id?: string }>();
+  const { id } = useParams<{ page: string; id?: string }>();
   const { isDarkTheme, hasError } = useAppSelector(
     (state) => state.application,
   );
@@ -40,7 +40,7 @@ function MainLayout({ children }: Readonly<{ children: React.ReactNode }>) {
           {isDarkTheme ? 'Turn on a light theme' : 'Turn on the dark theme'}
         </button>
       </div>
-      <Search page={page || '1'} currentId={id ? id : null} />
+      <Search currentId={id ? id : null} />
       <div
         className={styles.main}
         style={{ gridTemplateColumns: id ? '1.5fr 1fr' : '1fr' }}

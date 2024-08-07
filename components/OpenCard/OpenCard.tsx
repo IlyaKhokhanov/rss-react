@@ -1,5 +1,3 @@
-'use client';
-
 import { useMemo } from 'react';
 import { requestObj } from '../../types';
 import { useAppDispatch, useAppSelector } from '../../hooks';

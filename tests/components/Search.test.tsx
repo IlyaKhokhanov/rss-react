@@ -5,30 +5,25 @@ import { Providers } from '../../redux/provider';
 
 describe('Search', () => {
   it('should check input', async () => {
-    vi.mock('next/navigation', async () => {
+    vi.mock('@remix-run/react', async () => {
       return {
-        ...vi.importMock('next/navigation'),
-        useRouter: () => ({
-          push: vi.fn(),
-        }),
+        ...vi.importMock('@remix-run/react'),
+        Link: vi.isMockFunction,
       };
     });
 
     render(
       <Providers>
-        <Search currentId="1" page="1" />
+        <Search currentId="1" />
       </Providers>,
     );
 
     const input = screen.getByRole('textbox');
-    const button = screen.getByRole('button');
 
     const user = userEvent.setup();
     await user.click(input);
     await user.keyboard('hello');
-    await user.click(button);
 
     expect(input).toHaveValue('hello');
-    expect(button).toHaveTextContent('Search');
   });
 });

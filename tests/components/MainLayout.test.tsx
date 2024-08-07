@@ -6,6 +6,7 @@ import { store } from '../../redux/store';
 import MainLayout from '../../components/Layout/MainLayout';
 import FlyoutElement from '../../components/FlyoutElement/FlyoutElement';
 import userEvent from '@testing-library/user-event';
+import React from 'react';
 
 const fetchMock: FetchMock = createFetchMock(vi);
 fetchMock.enableMocks();
@@ -15,9 +16,9 @@ describe('MainLayout', async () => {
     fetchMock.resetMocks();
   });
 
-  vi.mock('next/navigation', async () => {
+  vi.mock('@remix-run/react', async () => {
     return {
-      ...vi.importMock('next/navigation'),
+      ...vi.importMock('@remix-run/react'),
       useRouter: () => ({
         push: vi.fn(),
       }),
@@ -25,6 +26,7 @@ describe('MainLayout', async () => {
         page: '1',
         id: '1',
       }),
+      Link: vi.isMockFunction,
     };
   });
 

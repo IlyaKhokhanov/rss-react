@@ -8,15 +8,17 @@ import userEvent from '@testing-library/user-event';
 
 describe('Card', () => {
   it('should card clicked', async () => {
-    vi.mock('next/navigation', async () => {
+    vi.mock('@remix-run/react', async () => {
       return {
-        ...vi.importMock('next/navigation'),
+        ...vi.importMock('@remix-run/react'),
         useRouter: () => ({
-          query: {
-            page: '1',
-            id: '1',
-          },
+          push: vi.fn(),
         }),
+        useParams: () => ({
+          page: '1',
+          id: '1',
+        }),
+        Link: vi.isMockFunction,
       };
     });
 
@@ -33,23 +35,26 @@ describe('Card', () => {
       </Provider>,
     );
 
-    const card = screen.getByText('Ben');
     const checkbox = screen.getByRole('checkbox');
 
     const user = userEvent.setup();
-    await user.click(card);
     await user.click(checkbox);
 
     expect(checkbox).toBeChecked();
   });
 
   it('should card clicked checkbox', async () => {
-    vi.mock('next/navigation', async () => {
+    vi.mock('@remix-run/react', async () => {
       return {
-        ...vi.importMock('next/navigation'),
+        ...vi.importMock('@remix-run/react'),
         useRouter: () => ({
           push: vi.fn(),
         }),
+        useParams: () => ({
+          page: '1',
+          id: '1',
+        }),
+        Link: vi.isMockFunction,
       };
     });
 
@@ -66,11 +71,9 @@ describe('Card', () => {
       </Provider>,
     );
 
-    const card = screen.getByText('Ben');
     const checkbox = screen.getByRole('checkbox');
 
     const user = userEvent.setup();
-    await user.click(card);
     await user.click(checkbox);
 
     expect(checkbox).not.toBeChecked();

@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { deleteAllItems } from '../../redux/slices/selectedItems';
 import ExportCSV from '../ExportCSV/ExportCSV';
+import styles from './FlyoutElement.module.scss';
 
 function FlyoutElement() {
   const dispatch = useAppDispatch();
@@ -9,13 +10,13 @@ function FlyoutElement() {
   return (
     <>
       {Boolean(selectedList.length) && (
-        <div className="flyout">
-          <h2 className="flyout-header">
+        <div className={styles.flyout}>
+          <h2 className={styles.header}>
             Heroes selected: {selectedList.length}
           </h2>
-          <div className="flyout-btns">
+          <div className={styles.btns}>
             <button
-              className="flyout-delete"
+              className={styles.delete}
               onClick={() => dispatch(deleteAllItems())}
             >
               Unselect all

@@ -1,51 +1,36 @@
-import { useEffect, useMemo, useState } from 'react';
+'use client';
+
+import { useMemo } from 'react';
 import { requestObj } from '../../types';
-import Loader from '../Loader/Loader';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { deleteItem, setItem } from '../../redux/slices/selectedItems';
-import { requestAPI } from '../../redux/requestService';
-import { useRouter } from 'next/router';
+import Link from 'next/link';
+import styles from './OpenCard.module.scss';
 
-function OpenCard() {
-  const router = useRouter();
+type OpenCardType = {
+  openCard: requestObj;
+  page: string;
+  id: string;
+  search: string;
+};
+
+function OpenCard({ openCard, page, id, search }: OpenCardType) {
   const dispatch = useAppDispatch();
   const { selectedList } = useAppSelector((state) => state.selectedItems);
-  const { currentElement, currentPage } = useAppSelector(
-    (state) => state.application,
-  );
-  const [openCard, setOpenCard] = useState<requestObj | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const isSelected = useMemo(
-    () => Boolean(selectedList.find((el) => el.id === currentElement)),
-    [selectedList, currentElement],
+    () => Boolean(selectedList.find((el) => el.id === id)),
+    [selectedList, id],
   );
-  const queryItem = requestAPI.useFetchOneItemQuery(currentElement);
 
-  useEffect(() => {
-    setIsLoading(queryItem.isLoading || queryItem.isFetching);
-    if (currentElement) {
-      if (queryItem.data) setOpenCard(queryItem.data);
-    }
-  }, [
-    currentElement,
-    queryItem.data,
-    queryItem.isFetching,
-    queryItem.isLoading,
-  ]);
-
-  function checkHandler(
-    e?:
-      | React.MouseEvent<HTMLDivElement, MouseEvent>
-      | React.ChangeEvent<HTMLInputElement>,
-  ) {
-    if (e) e.stopPropagation();
+  function checkHandler(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    e.stopPropagation();
     if (isSelected) {
-      dispatch(deleteItem(currentElement));
+      dispatch(deleteItem(id));
     } else {
       if (openCard) {
         dispatch(
           setItem({
-            id: currentElement,
+            id: id,
             url: openCard.url,
             name: openCard.name,
           }),
@@ -54,65 +39,58 @@ function OpenCard() {
     }
   }
 
-  if (isLoading) {
-    return <Loader />;
-  }
   return (
     <>
       {openCard && (
-        <div className="open-card">
-          <button
-            className="open-card-btn"
-            onClick={() => {
-              router.push({
-                pathname: '/page/' + currentPage,
-              });
-            }}
+        <div className={styles.card}>
+          <Link
+            className={styles.btn}
+            href={`/page/${page}${search ? `?search=${search}` : ''}`}
           >
             ✕
-          </button>
-          <h2 className="open-card-header">{openCard.name}</h2>
+          </Link>
+          <h2 className={styles.header}>{openCard.name}</h2>
           <div>
-            <span className="open-card-desc">Gender: </span>
+            <span className={styles.desc}>Gender: </span>
             <span>{openCard.gender}</span>
           </div>
           <div>
-            <span className="open-card-desc">Birthday: </span>
+            <span className={styles.desc}>Birthday: </span>
             <span>{openCard.birth_year}</span>
           </div>
           <div>
-            <span className="open-card-desc">Created: </span>
+            <span className={styles.desc}>Created: </span>
             <span>{new Date(openCard.created).toLocaleString()}</span>
           </div>
           <div>
-            <span className="open-card-desc">Edited: </span>
+            <span className={styles.desc}>Edited: </span>
             <span>{new Date(openCard.edited).toLocaleString()}</span>
           </div>
           <div>
-            <span className="open-card-desc">Height: </span>
+            <span className={styles.desc}>Height: </span>
             <span>{openCard.height}</span>
           </div>
           <div>
-            <span className="open-card-desc">Weight: </span>
+            <span className={styles.desc}>Weight: </span>
             <span>{openCard.mass}</span>
           </div>
           <div>
-            <span className="open-card-desc">Color skin: </span>
+            <span className={styles.desc}>Color skin: </span>
             <span>{openCard.skin_color}</span>
           </div>
           <div>
-            <span className="open-card-desc">Color hair: </span>
+            <span className={styles.desc}>Color hair: </span>
             <span>{openCard.hair_color}</span>
           </div>
           <div>
-            <span className="open-card-desc">Color eye: </span>
+            <span className={styles.desc}>Color eye: </span>
             <span>{openCard.eye_color}</span>
           </div>
-          <div className="item-checkbox" onClick={checkHandler}>
+          <div className={styles.checkbox} onClick={checkHandler}>
             <input
               type="checkbox"
               checked={isSelected}
-              onChange={checkHandler}
+              onChange={checkboxClick}
             />
             {isSelected ? 'Cancel the selection' : 'Select item'}
           </div>
@@ -123,3 +101,5 @@ function OpenCard() {
 }
 
 export default OpenCard;
+
+function checkboxClick() {}

@@ -1,32 +1,45 @@
-import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector, useLocalStorage } from '../../hooks';
-import { setSearchString } from '../../redux/slices/application';
+'use client';
 
-function Search() {
-  const dispatch = useAppDispatch();
-  const { searchString } = useAppSelector((state) => state.application);
+import styles from './Search.module.scss';
+import React, { useEffect } from 'react';
+import { useLocalStorage } from '../../hooks';
+import { useRouter } from 'next/navigation';
+
+function Search({
+  page,
+  currentId,
+}: {
+  page: string;
+  currentId: string | null;
+}) {
   const [state, setValue] = useLocalStorage('searchString', '');
+  const router = useRouter();
 
   function inputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setValue(e.target.value);
   }
 
   useEffect(() => {
-    dispatch(setSearchString(state));
+    router.push(
+      `/page/${page}${currentId ? '/details/' + currentId : ''}${state ? `?search=${state}` : ''}`,
+    );
   }, []);
 
+  function clickHandler() {
+    router.push(
+      `/page/1${currentId ? '/details/' + currentId : ''}${state ? `?search=${state}` : ''}`,
+    );
+  }
+
   return (
-    <div className="search">
+    <div className={styles.search}>
       <input
-        className="search-input"
-        defaultValue={searchString}
+        className={styles.input}
+        defaultValue={state}
         type="text"
         onChange={inputChange}
       />
-      <button
-        className="search-btn"
-        onClick={() => dispatch(setSearchString(state))}
-      >
+      <button className={styles.btn} onClick={clickHandler}>
         Search
       </button>
     </div>

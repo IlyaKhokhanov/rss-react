@@ -1,3 +1,5 @@
+'use client';
+
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { RootState, store } from '../redux/store';
 import { useState } from 'react';

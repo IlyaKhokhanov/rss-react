@@ -9,15 +9,21 @@
   overflow: hidden;
   cursor: pointer;
   box-shadow: 0px 18px 15px 0px #94949426;
+
+  div {
+    text-align: center;
+  }
 }
 
 .header {
+  text-align: center;
   padding: 10px;
   background: #e9e9e9;
 }
 
 .desc {
   font-weight: 600;
+  text-align: center;
 }
 
 .active {
@@ -31,20 +37,26 @@
   gap: 5px;
   font-size: 16px;
   cursor: pointer;
+
+  input {
+    cursor: pointer;
+  }
 }
 
-.dark-theme {
+[data-theme='dark'] {
   .item {
     background: #33383d;
     color: #fff;
-  }
-
-  .header {
-    background: #1f1f1f;
+    box-shadow: none;
   }
 
   .active {
     background: #1f1f1f;
     color: #fff;
+    box-shadow: none;
+  }
+
+  .header {
+    background: #1f1f1f;
   }
 }

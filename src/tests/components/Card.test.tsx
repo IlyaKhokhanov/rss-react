@@ -8,9 +8,9 @@ import userEvent from '@testing-library/user-event';
 
 describe('Card', () => {
   it('should card clicked', async () => {
-    vi.mock('next/router', async () => {
+    vi.mock('next/navigation', async () => {
       return {
-        ...vi.importMock('next/router'),
+        ...vi.importMock('next/navigation'),
         useRouter: () => ({
           query: {
             page: '1',
@@ -29,7 +29,7 @@ describe('Card', () => {
 
     render(
       <Provider store={store}>
-        <Card card={mockList.results[0]} />
+        <Card card={mockList.results[0]} openId="1" page="1" search="" />
       </Provider>,
     );
 
@@ -44,9 +44,9 @@ describe('Card', () => {
   });
 
   it('should card clicked checkbox', async () => {
-    vi.mock('next/router', async () => {
+    vi.mock('next/navigation', async () => {
       return {
-        ...vi.importMock('next/router'),
+        ...vi.importMock('next/navigation'),
         useRouter: () => ({
           push: vi.fn(),
         }),
@@ -62,7 +62,7 @@ describe('Card', () => {
 
     render(
       <Provider store={store}>
-        <Card card={mockList.results[0]} />
+        <Card card={mockList.results[0]} openId="1" page="1" search="" />
       </Provider>,
     );
 

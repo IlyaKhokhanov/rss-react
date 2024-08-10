@@ -16,56 +16,10 @@ beforeEach((): void => {
 
 describe('OpenCard', () => {
   it('should open card', async () => {
-    vi.mock('next/router', async () => {
+    vi.mock('next/navigation', async () => {
       return {
-        ...vi.importMock('next/router'),
+        ...vi.importMock('next/navigation'),
         useRouter: () => ({
-          query: {
-            page: '1',
-            id: '1',
-          },
-        }),
-      };
-    });
-
-    vi.spyOn(reduxHooks, 'useAppSelector').mockReturnValue({
-      currentElement: '1',
-      selectedList: [
-        { id: '1', url: '1/1/1/1', name: 'Fedya' },
-        { id: '2', url: '2/2/2/2', name: 'Fedya' },
-      ],
-    });
-
-    fetchMock.mockResponse(JSON.stringify(mockCard));
-
-    render(
-      <Provider store={store}>
-        <OpenCard />
-      </Provider>,
-    );
-
-    const head = await screen.getByRole('heading');
-    const user = userEvent.setup();
-    await user.click(head);
-
-    const name = await screen.getByText('Ben');
-    expect(name).toHaveTextContent('Ben');
-
-    const checkbox = await screen.getByRole('checkbox');
-    await user.click(checkbox);
-
-    expect(checkbox).toBeChecked();
-  });
-
-  it('should close card', async () => {
-    vi.mock('next/router', async () => {
-      return {
-        ...vi.importMock('next/router'),
-        useRouter: () => ({
-          query: {
-            page: '1',
-            id: '1',
-          },
           push: vi.fn(),
         }),
       };
@@ -83,7 +37,46 @@ describe('OpenCard', () => {
 
     render(
       <Provider store={store}>
-        <OpenCard />
+        <OpenCard id="1" openCard={mockCard} page="1" search="" />
+      </Provider>,
+    );
+
+    const head = await screen.getByRole('heading');
+    const user = userEvent.setup();
+    await user.click(head);
+
+    const name = await screen.getByText('Ben');
+    expect(name).toHaveTextContent('Ben');
+
+    const checkbox = await screen.getByRole('checkbox');
+    await user.click(checkbox);
+
+    expect(checkbox).toBeChecked();
+  });
+
+  it('should close card', async () => {
+    vi.mock('next/navigation', async () => {
+      return {
+        ...vi.importMock('next/navigation'),
+        useRouter: () => ({
+          push: vi.fn(),
+        }),
+      };
+    });
+
+    vi.spyOn(reduxHooks, 'useAppSelector').mockReturnValue({
+      currentElement: '1',
+      selectedList: [
+        { id: '1', url: '1/1/1/1', name: 'Fedya' },
+        { id: '2', url: '2/2/2/2', name: 'Fedya' },
+      ],
+    });
+
+    fetchMock.mockResponse(JSON.stringify(mockCard));
+
+    render(
+      <Provider store={store}>
+        <OpenCard id="1" openCard={mockCard} page="1" search="" />
       </Provider>,
     );
 
@@ -99,7 +92,46 @@ describe('OpenCard', () => {
 
     expect(checkbox).toBeChecked();
 
-    const button = await screen.getByRole('button');
+    const button = await screen.getByRole('link');
     await user.click(button);
+  });
+
+  it('should be check', async () => {
+    vi.mock('next/navigation', async () => {
+      return {
+        ...vi.importMock('next/navigation'),
+        useRouter: () => ({
+          push: vi.fn(),
+        }),
+      };
+    });
+
+    vi.spyOn(reduxHooks, 'useAppSelector').mockReturnValue({
+      currentElement: '1',
+      selectedList: [
+        { id: '30', url: '45/45/45/45', name: 'Fedya' },
+        { id: '54', url: '45/45/45/45', name: 'Fedya' },
+      ],
+    });
+
+    fetchMock.mockResponse(JSON.stringify(mockCard));
+
+    render(
+      <Provider store={store}>
+        <OpenCard id="1" openCard={mockCard} page="1" search="" />
+      </Provider>,
+    );
+
+    const head = await screen.getByRole('heading');
+    const user = userEvent.setup();
+    await user.click(head);
+
+    const name = await screen.getByText('Ben');
+    expect(name).toHaveTextContent('Ben');
+
+    const checkbox = await screen.getByRole('checkbox');
+    await user.click(checkbox);
+
+    expect(checkbox).not.toBeChecked();
   });
 });

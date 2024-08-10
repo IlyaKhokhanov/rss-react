@@ -1,4 +1,5 @@
 import { ISelectedItem } from '../../types';
+import styles from './ExportCSV.module.scss';
 
 type ExportCSV = {
   data: ISelectedItem[];
@@ -30,7 +31,7 @@ function ExportCSV({ data, fileName }: ExportCSV) {
   };
 
   return (
-    <button className="download" onClick={downloadCSV}>
+    <button className={styles.download} onClick={downloadCSV}>
       Download
     </button>
   );

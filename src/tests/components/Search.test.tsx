@@ -1,20 +1,23 @@
 import { render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { store } from '../../redux/store';
-import * as reduxHooks from '../../hooks';
 import userEvent from '@testing-library/user-event';
 import Search from '../../components/Search/Search';
+import { Providers } from '../../redux/provider';
 
 describe('Search', () => {
   it('should check input', async () => {
-    vi.spyOn(reduxHooks, 'useAppSelector').mockReturnValue({
-      searchString: '',
+    vi.mock('next/navigation', async () => {
+      return {
+        ...vi.importMock('next/navigation'),
+        useRouter: () => ({
+          push: vi.fn(),
+        }),
+      };
     });
 
     render(
-      <Provider store={store}>
-        <Search />
-      </Provider>,
+      <Providers>
+        <Search currentId="1" page="1" />
+      </Providers>,
     );
 
     const input = screen.getByRole('textbox');

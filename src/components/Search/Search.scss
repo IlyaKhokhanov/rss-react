@@ -1,4 +1,4 @@
-.header {
+.search {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,7 +29,7 @@
 }
 
 .dark-theme {
-  .header {
+  .search {
     &-input {
       background: #33383d;
       color: #fff;

@@ -3,13 +3,14 @@ import { IState } from '../../types';
 
 const initialState: IState = {
   currentPage: null,
-  searchString: localStorage.getItem('searchString') || '',
+  searchString: '',
   list: [],
   isLoading: true,
   countElements: 0,
   itemsPerPage: 10,
   currentElement: '',
   hasError: false,
+  isDarkTheme: false,
 };
 
 const catalogSlice = createSlice({
@@ -17,7 +18,6 @@ const catalogSlice = createSlice({
   initialState,
   reducers: {
     setSearchString(state, action) {
-      localStorage.setItem('searchString', action.payload);
       state.searchString = action.payload;
       state.currentPage = 1;
     },
@@ -39,6 +39,9 @@ const catalogSlice = createSlice({
     setError(state, action) {
       state.hasError = action.payload;
     },
+    setDarkTheme(state, action) {
+      state.isDarkTheme = action.payload;
+    },
   },
 });
 
@@ -50,6 +53,7 @@ export const {
   setLoading,
   setList,
   setError,
+  setDarkTheme,
 } = catalogSlice.actions;
 
 export default catalogSlice.reducer;

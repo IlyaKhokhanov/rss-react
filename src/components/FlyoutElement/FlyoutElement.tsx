@@ -1,7 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { deleteAllItems } from '../../redux/slices/selectedItems';
 import ExportCSV from '../ExportCSV/ExportCSV';
-import './FlyoutElement.scss';
 
 function FlyoutElement() {
   const dispatch = useAppDispatch();

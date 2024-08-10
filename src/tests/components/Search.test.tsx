@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from '../../redux/store';
 import * as reduxHooks from '../../hooks';
@@ -13,11 +12,9 @@ describe('Search', () => {
     });
 
     render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <Search />
-        </Provider>
-      </MemoryRouter>,
+      <Provider store={store}>
+        <Search />
+      </Provider>,
     );
 
     const input = screen.getByRole('textbox');

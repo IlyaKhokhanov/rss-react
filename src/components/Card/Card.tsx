@@ -1,17 +1,19 @@
 import { requestObj } from '../../types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setCurrentElement } from '../../redux/slices/application';
-import './Card.scss';
-import { deleteItem, setItem } from '../../redux/slices/selectedItems';
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
+import { deleteItem, setItem } from '../../redux/slices/selectedItems';
 
 type CardProps = {
   card: requestObj;
 };
 
 function Card({ card }: CardProps) {
+  const router = useRouter();
   const dispatch = useAppDispatch();
-  const { currentElement } = useAppSelector((state) => state.application);
+  const { currentElement, currentPage } = useAppSelector(
+    (state) => state.application,
+  );
   const { selectedList } = useAppSelector((state) => state.selectedItems);
 
   const cardId = card.url.split('/')[card.url.split('/').length - 2];
@@ -21,8 +23,12 @@ function Card({ card }: CardProps) {
     [selectedList, cardId],
   );
 
-  function checkHandler(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    e.stopPropagation();
+  function checkHandler(
+    e?:
+      | React.MouseEvent<HTMLDivElement, MouseEvent>
+      | React.ChangeEvent<HTMLInputElement>,
+  ) {
+    if (e) e.stopPropagation();
     if (isSelected) {
       dispatch(deleteItem(cardId));
     } else {
@@ -30,12 +36,22 @@ function Card({ card }: CardProps) {
     }
   }
 
+  function clickHandler() {
+    if (isActive) {
+      router.push({
+        pathname: '/page/' + currentPage,
+      });
+    } else {
+      router.push({
+        pathname: '/page/' + currentPage + '/details/' + cardId,
+      });
+    }
+  }
+
   return (
     <li
       className={isActive ? 'list-item-active' : 'list-item'}
-      onClick={() => {
-        dispatch(setCurrentElement(isActive ? '' : cardId));
-      }}
+      onClick={clickHandler}
     >
       <h3 className="list-item-header">{card.name}</h3>
       <div>
@@ -55,7 +71,7 @@ function Card({ card }: CardProps) {
         <span>{card.hair_color}</span>
       </div>
       <div className="item-checkbox" onClick={checkHandler}>
-        <input type="checkbox" checked={isSelected} onChange={checkboxClick} />
+        <input type="checkbox" checked={isSelected} onChange={checkHandler} />
         {isSelected ? 'Cancel the selection' : 'Select item'}
       </div>
     </li>
@@ -63,5 +79,3 @@ function Card({ card }: CardProps) {
 }
 
 export default Card;
-
-function checkboxClick() {}

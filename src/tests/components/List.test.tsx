@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from '../../redux/store';
 import { mockList } from '../mock';
@@ -13,11 +12,9 @@ describe('List', () => {
     });
 
     render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <List />
-        </Provider>
-      </MemoryRouter>,
+      <Provider store={store}>
+        <List />
+      </Provider>,
     );
 
     const header = screen.getByText('List is empty');
@@ -25,17 +22,24 @@ describe('List', () => {
   });
 
   it('should render list with elements', () => {
+    vi.mock('next/router', async () => {
+      return {
+        ...vi.importMock('next/router'),
+        useRouter: () => ({
+          push: vi.fn(),
+        }),
+      };
+    });
+
     vi.spyOn(reduxHooks, 'useAppSelector').mockReturnValue({
       list: mockList.results,
       selectedList: [{ id: '2', url: '2/2/2/2', name: 'Fedya' }],
     });
 
     render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <List />
-        </Provider>
-      </MemoryRouter>,
+      <Provider store={store}>
+        <List />
+      </Provider>,
     );
 
     const listItems = screen.getAllByRole('listitem');

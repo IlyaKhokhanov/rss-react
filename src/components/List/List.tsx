@@ -1,6 +1,5 @@
 import Card from '../Card/Card';
 import { useAppSelector } from '../../hooks';
-import './List.scss';
 
 function List() {
   const { list } = useAppSelector((state) => state.application);
@@ -14,7 +13,7 @@ function List() {
           ))}
         </ul>
       ) : (
-        <div className="list-empty">List is empty</div>
+        <div className="empty">List is empty</div>
       )}
     </>
   );

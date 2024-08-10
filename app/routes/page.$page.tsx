@@ -41,7 +41,6 @@ function Page() {
       <div className="block-left">
         <List
           list={listData.results ? listData.results : null}
-          openId={id}
           page={page}
           search={search}
         />

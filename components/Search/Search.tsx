@@ -1,10 +1,15 @@
-import React from 'react';
-import { useLocalStorage } from '../../hooks';
+import React, { useState } from 'react';
 import { Link } from '@remix-run/react';
 import styles from './Search.module.scss';
 
-function Search({ currentId }: { currentId: string | null }) {
-  const [state, setValue] = useLocalStorage('searchString', '');
+function Search({
+  currentId,
+  search,
+}: {
+  currentId: string | null;
+  search: string;
+}) {
+  const [state, setValue] = useState<string>();
 
   function inputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setValue(e.target.value);
@@ -14,7 +19,7 @@ function Search({ currentId }: { currentId: string | null }) {
     <div className={styles.search}>
       <input
         className={styles.input}
-        defaultValue={state}
+        defaultValue={search}
         type="text"
         onChange={inputChange}
       />

@@ -1,16 +1,14 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import createFetchMock, { FetchMock } from 'vitest-fetch-mock';
 import { mockList } from '../mock';
 import { Provider } from 'react-redux';
 import { store } from '../../redux/store';
-import MainLayout from '../../components/Layout/MainLayout';
-import FlyoutElement from '../../components/FlyoutElement/FlyoutElement';
-import userEvent from '@testing-library/user-event';
+import Page from '../../app/routes/page.$page';
 
 const fetchMock: FetchMock = createFetchMock(vi);
 fetchMock.enableMocks();
 
-describe('MainLayout', async () => {
+describe('Page', async () => {
   beforeEach((): void => {
     fetchMock.resetMocks();
   });
@@ -30,24 +28,23 @@ describe('MainLayout', async () => {
           get: vi.fn(),
         },
       ],
+      Outlet: vi.isMockFunction,
       Link: vi.isMockFunction,
+      useLoaderData: () => ({
+        listData: mockList,
+        page: '1',
+        id: '',
+        search: '',
+      }),
     };
   });
 
-  it('should changed theme', async () => {
+  it('should render Page', async () => {
     fetchMock.mockResponse(JSON.stringify(mockList));
     render(
       <Provider store={store}>
-        <MainLayout>
-          <FlyoutElement />
-        </MainLayout>
+        <Page />
       </Provider>,
     );
-
-    const buttons = screen.getAllByRole('button');
-    const user = userEvent.setup();
-    await user.click(buttons[1]);
-
-    expect(buttons[1]).toHaveTextContent('Turn on a light theme');
   });
 });

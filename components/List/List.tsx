@@ -4,12 +4,11 @@ import styles from './List.module.scss';
 
 type ListType = {
   list: requestObj[] | null;
-  openId: string;
   page: string;
   search: string;
 };
 
-function List({ list, openId, page, search }: ListType) {
+function List({ list,  page, search }: ListType) {
   return (
     <>
       {list && list.length ? (
@@ -18,7 +17,6 @@ function List({ list, openId, page, search }: ListType) {
             <Card
               key={indx}
               card={el}
-              openId={openId}
               page={page}
               search={search}
             />

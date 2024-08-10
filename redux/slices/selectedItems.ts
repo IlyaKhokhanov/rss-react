@@ -3,10 +3,12 @@ import { ISelectedItem } from '../../types';
 
 type selectedItemsState = {
   selectedList: ISelectedItem[];
+  openId: string;
 };
 
 const initialState: selectedItemsState = {
   selectedList: [],
+  openId: '',
 };
 
 const selectedItems = createSlice({
@@ -24,9 +26,13 @@ const selectedItems = createSlice({
     deleteAllItems(state) {
       state.selectedList = [];
     },
+    setOpenId(state, action) {
+      state.openId = action.payload;
+    },
   },
 });
 
-export const { setItem, deleteItem, deleteAllItems } = selectedItems.actions;
+export const { setItem, deleteItem, deleteAllItems, setOpenId } =
+  selectedItems.actions;
 
 export default selectedItems.reducer;

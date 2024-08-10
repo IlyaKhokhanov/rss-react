@@ -1,23 +1,28 @@
 import { requestObj } from '../../types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useMemo } from 'react';
-import { deleteItem, setItem } from '../../redux/slices/selectedItems';
+import {
+  deleteItem,
+  setItem,
+  setOpenId,
+} from '../../redux/slices/selectedItems';
 import styles from './Card.module.scss';
 import { Link } from '@remix-run/react';
 
 type CardProps = {
   card: requestObj;
-  openId: string;
   page: string;
   search: string;
 };
 
-function Card({ card, openId, page, search }: CardProps) {
+function Card({ card, page, search }: CardProps) {
   const dispatch = useAppDispatch();
-  const { selectedList } = useAppSelector((state) => state.selectedItems);
+  const { selectedList, openId } = useAppSelector(
+    (state) => state.selectedItems,
+  );
 
   const cardId = card.url.split('/')[card.url.split('/').length - 2];
-  const isActive = openId === cardId;
+  const isActive = useMemo(() => openId === cardId, [openId, cardId]);
   const isSelected = useMemo(
     () => Boolean(selectedList.find((el) => el.id === cardId)),
     [selectedList, cardId],
@@ -36,6 +41,7 @@ function Card({ card, openId, page, search }: CardProps) {
     <li className={isActive ? styles.active : styles.item}>
       <Link
         to={`/page/${page}${!isActive ? '/details/' + cardId : ''}${search ? `?search=${search}` : ''}`}
+        onClick={() => dispatch(setOpenId(isActive ? '' : cardId))}
       >
         <h3 className={styles.header}>{card.name}</h3>
         <div>

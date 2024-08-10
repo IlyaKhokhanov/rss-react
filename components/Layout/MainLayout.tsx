@@ -3,15 +3,21 @@ import Search from '../Search/Search';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setError, setDarkTheme } from '../../redux/slices/application';
 import { useEffect } from 'react';
-import { useParams } from '@remix-run/react';
+import { useParams, useSearchParams } from '@remix-run/react';
 import styles from './MainLayout.module.scss';
+import { setOpenId } from '../../redux/slices/selectedItems';
 
 function MainLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const dispatch = useAppDispatch();
   const { id } = useParams<{ page: string; id?: string }>();
+  const search = useSearchParams();
   const { isDarkTheme, hasError } = useAppSelector(
     (state) => state.application,
   );
+
+  useEffect(() => {
+    if (id) dispatch(setOpenId(id));
+  }, []);
 
   useEffect(() => {
     function addError() {
@@ -40,7 +46,10 @@ function MainLayout({ children }: Readonly<{ children: React.ReactNode }>) {
           {isDarkTheme ? 'Turn on a light theme' : 'Turn on the dark theme'}
         </button>
       </div>
-      <Search currentId={id ? id : null} />
+      <Search
+        currentId={id ? id : null}
+        search={search[0].get('search') || ''}
+      />
       <div
         className={styles.main}
         style={{ gridTemplateColumns: id ? '1.5fr 1fr' : '1fr' }}

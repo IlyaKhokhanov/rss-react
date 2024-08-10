@@ -14,7 +14,7 @@ describe('Search', () => {
 
     render(
       <Providers>
-        <Search currentId="1" />
+        <Search currentId="1" search='' />
       </Providers>,
     );
 

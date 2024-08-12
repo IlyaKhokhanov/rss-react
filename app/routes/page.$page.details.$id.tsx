@@ -1,7 +1,6 @@
 import { json } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import OpenCard from '../../components/OpenCard/OpenCard';
-// import { requestObj } from '../../../../../types';
 
 type detailsType = {
   params: { page: string; id: string };

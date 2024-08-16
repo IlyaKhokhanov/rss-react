@@ -2,8 +2,8 @@ import { Route, Routes } from 'react-router-dom';
 import NotFound from './components/NotFound/NotFound';
 import Header from './components/Header/Header';
 import MainPage from './components/MainPage/MainPage';
-import UncontrolledForm from './components/Form/UncontrolledForm';
-import ReactHookForm from './components/Form/ReactHookForm';
+import UncontrolledForm from './components/Forms/UncontrolledForm';
+import ReactHookForm from './components/Forms/ReactHookForm';
 
 function App() {
   return (

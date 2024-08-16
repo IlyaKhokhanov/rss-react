@@ -1,16 +1,16 @@
 import { Link, useLocation } from 'react-router-dom';
 import styles from './Header.module.scss';
 
-interface MenuItems {
+type MenuItem = {
   title: string;
   to: string;
-}
+};
 
 function Header() {
-  const links: MenuItems[] = [
+  const links: MenuItem[] = [
     { title: 'Main', to: '/' },
-    { title: 'Uncontrolled Form', to: '/uncontroll' },
-    { title: 'React Hook Form', to: '/hook' },
+    { title: 'Uncontrolled Form', to: '/uncontrolled' },
+    { title: 'React Hook Form', to: '/hookform' },
   ];
 
   const { pathname } = useLocation();

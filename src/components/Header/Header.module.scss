@@ -11,10 +11,14 @@
 }
 
 .link {
-  color: #444444;
+  color: #000000;
   padding: 10px;
+
+  &:hover {
+    opacity: 0.7;
+  }
 }
 
 .active {
-  color: #6e6e6e;
+  color: #555555;
 }

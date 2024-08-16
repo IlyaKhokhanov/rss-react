@@ -1,6 +1,10 @@
 module.exports = {
   root: true,
-  env: { browser: true, es2020: true },
+  env: {
+    browser: true,
+    node: true,
+    es6: true,
+  },
   extends: [
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
@@ -14,12 +18,6 @@ module.exports = {
     },
     ecmaVersion: 'latest',
     sourceType: 'module',
-  },
-  env: {
-    browser: true,
-    es6: true,
-    jest: true,
-    node: true,
   },
   plugins: ['@typescript-eslint', 'react', 'react-hooks', 'react-compiler'],
   rules: {

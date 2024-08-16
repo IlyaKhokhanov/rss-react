@@ -20,6 +20,8 @@ function UncontrolledForm() {
   const dispatch = useAppDispatch();
   const { countries } = useAppSelector((state) => state.application);
 
+  function submitHandler() {}
+
   async function handlePicture(
     e: ChangeEvent<HTMLInputElement>,
   ): Promise<void> {
@@ -51,7 +53,7 @@ function UncontrolledForm() {
   return (
     <div className={styles.container}>
       <h1 className={styles.header}>Uncontrolled Form</h1>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={submitHandler}>
         <input
           className={styles.input}
           type="text"
@@ -97,10 +99,15 @@ function UncontrolledForm() {
           <option value="Female">Female</option>
         </select>
 
-        <div className={styles.input}>
-          <label htmlFor="picture">Picture</label>
+        <div className={styles.picture}>
+          <label
+            htmlFor="picture"
+            style={{ fontSize: 20, marginLeft: 10, marginBottom: 5 }}
+          >
+            Picture
+          </label>
           <input
-            className={styles.file}
+            className={styles.input}
             type="file"
             name="picture"
             ref={pictureRef}
@@ -111,6 +118,7 @@ function UncontrolledForm() {
 
         <input
           className={styles.input}
+          style={{ marginBottom: countriesList.length ? 5 : 20 }}
           type="text"
           placeholder="Country, e.g. Australia"
           name="country"
@@ -123,7 +131,7 @@ function UncontrolledForm() {
             {countriesList.map((country) => {
               return (
                 <p
-                  className={styles.input}
+                  className={styles.country}
                   key={country}
                   onClick={(e) => {
                     if (e.target instanceof HTMLElement && e.target.textContent)
@@ -137,9 +145,9 @@ function UncontrolledForm() {
           </div>
         )}
 
-        <div className={styles.input}>
-          <label htmlFor="terms">A Terms and Conditions agreement</label>
+        <div className={styles.terms}>
           <input type="checkbox" name="terms" ref={termsRef} id="terms" />
+          <label htmlFor="terms">A Terms and Conditions agreement</label>
         </div>
 
         <button type="submit" className={styles.button}>

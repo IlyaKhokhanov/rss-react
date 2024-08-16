@@ -17,6 +17,7 @@ interface IState {
   hookList: Item[];
   refList: Item[];
   base64: string;
+  lastItem: '';
 }
 
 const initialState: IState = {
@@ -24,6 +25,7 @@ const initialState: IState = {
   hookList: [],
   refList: [],
   base64: '',
+  lastItem: '',
 };
 
 const catalogSlice = createSlice({
@@ -39,9 +41,13 @@ const catalogSlice = createSlice({
     setBase64: (state, action) => {
       state.base64 = action.payload;
     },
+    setLastItem: (state, action) => {
+      state.lastItem = action.payload;
+    },
   },
 });
 
-export const { setHookList, setRefList, setBase64 } = catalogSlice.actions;
+export const { setHookList, setRefList, setBase64, setLastItem } =
+  catalogSlice.actions;
 
 export default catalogSlice.reducer;

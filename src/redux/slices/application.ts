@@ -1,23 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { countryList } from '../../data';
-
-type Item = {
-  name: string;
-  age: number;
-  email: string;
-  password: string;
-  gender: string;
-  picture: string;
-  country: string;
-  terms: boolean;
-};
+import { Item } from '../../utils/types';
 
 interface IState {
   countries: string[];
   hookList: Item[];
   refList: Item[];
   base64: string;
-  lastItem: '';
+  lastItem: string;
 }
 
 const initialState: IState = {

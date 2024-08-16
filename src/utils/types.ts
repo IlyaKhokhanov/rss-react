@@ -21,3 +21,14 @@ export interface FormData {
   picture: object;
   country: string;
 }
+
+export type Item = {
+  name: string;
+  age: number;
+  email: string;
+  password: string;
+  gender: string;
+  picture: string;
+  country: string;
+  terms: boolean;
+};

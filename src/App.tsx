@@ -1,12 +1,17 @@
-import './App.scss';
 import { Route, Routes } from 'react-router-dom';
 import NotFound from './components/NotFound/NotFound';
+import Header from './components/Header/Header';
+import MainPage from './components/MainPage/MainPage';
 
 function App() {
   return (
-    <Routes>
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <>
+      <Header />
+      <Routes>
+        <Route index element={<MainPage />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   );
 }
 

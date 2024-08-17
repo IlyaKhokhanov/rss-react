@@ -1,5 +1,4 @@
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
-import styles from './Form.module.scss';
 import { convertBase64, schema, writeErrors } from '../../utils/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
@@ -11,6 +10,7 @@ import { Errors, FormData } from '../../utils/types';
 import { ValidationError } from 'yup';
 import { useNavigate } from 'react-router-dom';
 import Error from '../Error/Error';
+import styles from './Form.module.scss';
 
 function UncontrolledForm() {
   const nameRef = useRef<HTMLInputElement>(null);
@@ -46,7 +46,7 @@ function UncontrolledForm() {
     navigate('/');
   }
 
-  async function submitHandler(e: FormEvent<HTMLFormElement>): Promise<void> {
+  async function submitHandler(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = {
       name: nameRef.current ? nameRef.current.value : '',
@@ -72,9 +72,7 @@ function UncontrolledForm() {
     }
   }
 
-  async function handlePicture(
-    e: ChangeEvent<HTMLInputElement>,
-  ): Promise<void> {
+  async function handlePicture(e: ChangeEvent<HTMLInputElement>) {
     if ('files' in e.target && e.target.files) {
       const file: File = e.target.files[0];
       const base64 = await convertBase64(file);
@@ -83,7 +81,7 @@ function UncontrolledForm() {
     }
   }
 
-  function filterCountries(e: ChangeEvent<HTMLInputElement>): void {
+  function filterCountries(e: ChangeEvent<HTMLInputElement>) {
     const text: string = e.target.value;
     if (!text.length) setCountriesList([]);
     else {
